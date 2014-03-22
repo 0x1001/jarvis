@@ -37,7 +37,7 @@ def save_list(words):
         Nothing
     """
     with open("wordslist.txt","w") as fp:
-        fp.write("wordslist=[\n")
+        fp.write("wordslist=[r'',\n")
         for word in words:
             fp.write("r'" + word + "',\n")
         fp.write("]\n")

@@ -8,6 +8,7 @@ class DataBaseError(Exception): pass
 ################################################################################
 
 _temp_database=[
+r'',
 r'all',
 r'chinese',
 r'dance',
