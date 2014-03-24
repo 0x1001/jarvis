@@ -43,21 +43,47 @@ def readFileContents(path):
             return fp.read()
     except IOError as error: raise WordParseException(error)
 
-def save_list(words):
+def writeFileContents(path,contents):
     """
-        This function saves words list in file
+        Write contents to file path
 
         Input:
-        words       - List of words
+        path        - File path
+        contents    - File contents
 
-        Returns:
+        Returns
         Nothing
     """
-    with open("wordslist.txt","w") as fp:
-        fp.write("wordslist=[r'',\n")
-        for word in words:
-            fp.write("r'" + word + "',\n")
-        fp.write("]\n")
+    if not isinstance(path,str): raise WordParseException("Path is not a string!")
+    if not isinstance(contents,str): raise WordParseException("Contents is not a string!")
+
+    try:
+        with open(path,"w") as fp:
+            fp.write(contents)
+    except IOError as error: raise WordParseException(error)
+
+def createDatabase(data_list):
+    """
+        Creates database from input list of string. Produces database string.
+        Can be an SQL or just python list.
+
+        Input:
+        data_list       - List of string
+
+        Returns:
+        string
+    """
+    if not isinstance(data_list,list): raise WordParseException("Input data has to be list")
+
+    data_string = "database=[\r'',\n"
+
+    for element in data_list:
+        if not isinstance(element,str): raise WordParseException("Input data has to be list of strings")
+        data_string += "r'" + element + "',\n"
+
+    data_string += "]\n"
+
+    return data_string
 
 if __name__ == "__main__":
     import argparse
