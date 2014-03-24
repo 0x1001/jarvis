@@ -1,30 +1,47 @@
 ################################################################################
+################################### Class ######################################
+################################################################################
+class WordParseException(Exception): pass
+
+################################################################################
 ################################### Functions ##################################
 ################################################################################
 
-def word_parser(path):
+def parseContents(text):
     """
-        This function parses given txt file and returns list of words
+        Exctracts words from text
 
         Input:
-        path    - Path to file path
+        text        - Input text string
 
         Returns:
-        List of words
+        list of words
     """
     import re
 
+    if not isinstance(text,str): raise WordParseException("Not a string!")
+
     word_re = re.compile("[a-zA-Z]*")
-
-    with open(path,"r") as fp:
-        contents = fp.readlines()
-
     words = set()
-    for line in contents:
-        for word in word_re.findall(line):
+    for word in word_re.findall(text):
             words.add(word.lower())
 
-    return list(words)
+    return words
+
+def readFileContents(path):
+    """
+        Reads file contents
+
+        Input:
+        Path        - Path to file
+
+        Retruns:
+        File contents
+    """
+    try:
+        with open(path,"r") as fp:
+            return fp.read()
+    except IOError as error: raise WordParseException(error)
 
 def save_list(words):
     """
