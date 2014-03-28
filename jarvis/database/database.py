@@ -62,3 +62,40 @@ class WordDataBase(object):
             return self._database[id]
         except IndexError:
             raise DataBaseException("Id not in database.")
+
+class TrainingDataBase(object):
+    """
+        Database for traning materials
+
+        Attributes:
+        _database       - Dictionary of strings
+    """
+    def __init__(self):
+        self._database = {}
+
+    def add(self,request,answer):
+        """
+            Adds request and answer for that request
+
+            Input:
+            request     - Request
+            answer      - Answer for request
+
+            Returns:
+            Nothing
+        """
+        if not isinstance(request,str) or not isinstance(answer,str): raise DataBaseException("Bad input. Not a string.")
+
+        self._database[request] = answer
+
+    def getAll(self):
+        """
+            Returns all database elements in form of two lists
+
+            Input:
+            Nothing
+
+            Returns:
+            list of request,list of answer
+        """
+        return self._database.items()

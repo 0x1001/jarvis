@@ -147,6 +147,88 @@ class WordDataBaseTest(unittest.TestCase):
         with self.assertRaises(DataBaseException):
             self.db.idWord(-5)
 
+class TrainingDataBaseTest(unittest.TestCase):
+    def setUp(self):
+        from database import TrainingDataBase
+        self.db = TrainingDataBase()
+
+    def test_add_invalidinput(self):
+        from database import DataBaseException
+
+        with self.assertRaises(DataBaseException):
+            self.db.add(None,None)
+
+    def test_add_validinput(self):
+        self.db.add("Abc abc abc","Abc abc abc")
+
+    def test_getAll_dbempty(self):
+        data = self.db.getAll()
+        self.assertEqual(data,[])
+
+    def test_getAll_dbnotempty(self):
+        self.db.add("Abc abc abc","Abc abc abc")
+        self.db.add("Abc abc abc","kkk kkk kkk")
+        self.db.add("bbb bbb bbb","bbb bbb bbb")
+        self.db.add("ccc ccc ccc","ccc ccc ccc")
+
+        data = self.db.getAll()
+        self.assertNotIn(("Abc abc abc","Abc abc abc"),data)
+        self.assertIn(("bbb bbb bbb","bbb bbb bbb"),data)
+        self.assertIn(("ccc ccc ccc","ccc ccc ccc"),data)
+        self.assertIn(("Abc abc abc","kkk kkk kkk"),data)
+
+
+class TrainerTest(unittest.TestCase):
+    def setUp(self):
+        from trainer import Trainer
+        from database import TrainingDataBase,WordDataBase
+
+        self.tr = Trainer(WordDataBase(),TrainingDataBase())
+
+    def test_init_invalidinput(self):
+        from trainer import Trainer,TrainerException
+
+        with self.assertRaises(TrainerException):
+            tr = Trainer(None,None)
+
+    def test_train_invalidinput(self):
+        from trainer import TrainerException
+        with self.assertRaises(TrainerException):
+            self.tr.train(None)
+
+    def test_train_invalidinput(self):
+        from brain import Brain
+
+        self.tr.train(Brain())
+
+    def test_prepareDataSet(self):
+        data = self.tr._prepareDataSet()
+
+        self.assertNotEqual(data,[])
+
+
+class TestBrain(unittest.TestCase):
+    def setUp(self):
+        from brain import Brain
+
+        self.br = Brain()
+
+    def test_configure_invalidinput(self):
+        from brain import BrainException
+
+        with self.assertRaises(BrainException):
+            self.br.configure(None,None,None)
+
+    def test_configure_validinput(self):
+        from brain import BrainException
+
+        self.br.configure(1,1,1)
+
+    def test_learn_invalidinput(self):
+        from brain import BrainException
+
+        with self.assertRaises(BrainException):
+            self.br.learn(None)
 
 if __name__ == "__main__":
     unittest.main()
