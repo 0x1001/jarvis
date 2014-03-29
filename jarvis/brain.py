@@ -59,21 +59,31 @@ class Brain(object):
 
         data = SupervisedDataSet(self._input,self._output)
         for input,output in dataset.items():
-            if len(input) > self._input:
-                input = input[:self._input]
-            elif len(input) < self._input:
-                input += (0,)*(self._input - len(input))
-
-            if len(output) > self._output:
-                output = output[:self._output]
-            elif len(output) < self._output:
-                output += (0,)*(self._output - len(output))
-
+            input = self._normalize(input,self._input)
+            output = self._normalize(output,self._output)
             data.addSample(input,output)
             data.addSample(input,output)
 
         trainer = BackpropTrainer(self._net, data)
         trainer.trainUntilConvergence()
+
+    def _normalize(self,data,norm):
+        """
+            Adjust data to proper length
+
+            Input:
+            data        - List to adjust
+            norm        - Norm used for adjusting
+
+            Returns:
+            adjusted data
+        """
+        if len(data) > norm:
+            data = data[:norm]
+        elif len(data) < norm:
+            data += (0,)*(norm - len(data))
+
+        return data
 
 ##class Brain(object):
 ##    """
