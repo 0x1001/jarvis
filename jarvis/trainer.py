@@ -31,13 +31,15 @@ class Trainer(object):
             Returns:
             Nothing
         """
-        from brain import Brain
+        from brain import Brain,BrainException
 
         if not isinstance(brain_instance,Brain):
             raise TrainerException("Bad input. Has to be Brain object.")
 
-        #brain_instance.configure()
-        brain_instance.learn(self._prepareDataSet())
+        brain_instance.configure(self._traning_db.maxRequestWordCount(),self._traning_db.maxAnswerWordCount())
+
+        try: brain_instance.learn(self._prepareDataSet())
+        except BrainException as error: raise TrainerException(error)
 
     def _prepareDataSet(self):
         """
@@ -49,4 +51,9 @@ class Trainer(object):
             Returns:
             dataset
         """
-        return []
+        dataset = {}
+
+        for request,answer in self._traning_db.getAll():
+            dataset[tuple(self._word_db.multipleWordId(request.split(" ")))] = tuple(self._word_db.multipleWordId(answer.split(" ")))
+
+        return dataset

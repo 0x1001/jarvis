@@ -61,7 +61,31 @@ class WordDataBase(object):
         try:
             return self._database[id]
         except IndexError:
-            raise DataBaseException("Id not in database.")
+            raise DataBaseException("Id: " + str(id) + " not in database.")
+
+    def multipleWordId(self,words):
+        """
+            This function gets words ids from database
+
+            Input:
+            words   - list of words
+
+            Returns:
+            list of words ids
+        """
+        return map(self.wordId,words)
+
+    def multipleIdWord(self,ids):
+        """
+            This function returns list of words that corespond to list of ids
+
+            Input:
+            ids     - List of word ids
+
+            Returns:
+            list of words
+        """
+        return map(self.idWord,ids)
 
 class TrainingDataBase(object):
     """
@@ -99,3 +123,29 @@ class TrainingDataBase(object):
             list of request,list of answer
         """
         return self._database.items()
+
+    def maxRequestWordCount(self):
+        """
+            Counts word in requests. Returns max word count.
+
+            Input:
+            Nothing
+
+            Returns:
+            Maximal count of words in requests
+        """
+        try: return max(map(lambda request: len(request.split(" ")),self._database.keys()))
+        except ValueError: return 0
+
+    def maxAnswerWordCount(self):
+        """
+            Counts word in answers. Returns max word count.
+
+            Input:
+            Nothing
+
+            Returns:
+            Maximal count of words in answers
+        """
+        try: return max(map(lambda request: len(request.split(" ")),self._database.values()))
+        except ValueError: return 0

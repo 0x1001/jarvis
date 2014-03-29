@@ -19,26 +19,27 @@ class Brain(object):
         self._output = 0
         self._hidden = 0
 
-    def configure(self,input,output,hidded):
+    def configure(self,input,output):
         """
             This function configures brain
 
             Input:
-            Nothing
+            input       - Input size
+            output      - Output size
 
             Returns:
             Nothing
         """
         from pybrain.tools.shortcuts import buildNetwork
 
-        if not isinstance(input,int) or not isinstance(output,int) or not isinstance(hidded,int):
+        if not isinstance(input,int) or not isinstance(output,int):
             raise BrainException("Bad input. Three int expected.")
 
         self._input = input
         self._output = output
-        self._hidden = hidded
+        self._hidden = int(round((input + output)*2/3))
 
-        self._net = buildNetwork(input,output,hidded)
+        self._net = buildNetwork(self._input,self._hidden,self._output)
 
     def learn(self,dataset):
         """
@@ -54,6 +55,7 @@ class Brain(object):
         from pybrain.datasets import SupervisedDataSet
 
         if self._net == None: raise BrainException("Brain is not configured!")
+        if dataset == {}: raise BrainException("Dataset for learning is empty.")
 
         data = SupervisedDataSet(self._input,self._output)
         for input,output in dataset.items():

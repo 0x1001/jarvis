@@ -1,19 +1,12 @@
 import unittest
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 class WordParserTest(unittest.TestCase):
     def setUp(self):
-        import sys
-        import os
-
-        self.__path = sys.path
-        sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
         self.__dummy_file = "dummy.txt"
-
-    def tearDown(self):
-        import sys
-
-        sys.path = self.__path
 
     def test_wordsList_validinput(self):
         from database import WordParser
@@ -37,18 +30,7 @@ class WordParserTest(unittest.TestCase):
 
 class LowLevelTests(unittest.TestCase):
     def setUp(self):
-        import sys
-        import os
-
-        self.__path = sys.path
-        sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
         self.__dummy_file = "dummy.txt"
-
-    def tearDown(self):
-        import sys
-
-        sys.path = self.__path
 
     def test_writeFileContents_validinput(self):
         import os
@@ -147,6 +129,31 @@ class WordDataBaseTest(unittest.TestCase):
         with self.assertRaises(DataBaseException):
             self.db.idWord(-5)
 
+    def test_multipleWordId(self):
+        ids = self.db.multipleWordId(["aaa","bbb","ccc"])
+        self.assertEqual(ids[0],2)
+        self.assertEqual(ids[1],1)
+        self.assertEqual(ids[2],0)
+
+    def test_multipleWordId_exception(self):
+        from database import DataBaseException
+
+        with self.assertRaises(DataBaseException):
+            ids = self.db.multipleWordId(["kkk","hhh","www"])
+
+    def test_multipleIdWord(self):
+        words = self.db.multipleIdWord([2,1,0,0])
+        self.assertEqual(words[0],"aaa")
+        self.assertEqual(words[1],"bbb")
+        self.assertEqual(words[2],"ccc")
+        self.assertEqual(words[3],"ccc")
+
+    def test_multipleIdWord_exception(self):
+        from database import DataBaseException
+
+        with self.assertRaises(DataBaseException):
+            words = self.db.multipleIdWord([5,5,5])
+
 class TrainingDataBaseTest(unittest.TestCase):
     def setUp(self):
         from database import TrainingDataBase
@@ -177,13 +184,42 @@ class TrainingDataBaseTest(unittest.TestCase):
         self.assertIn(("ccc ccc ccc","ccc ccc ccc"),data)
         self.assertIn(("Abc abc abc","kkk kkk kkk"),data)
 
+    def test_maxRequestWordCount(self):
+        self.db.add("Abc abc abc ccc","Abc abc abc")
+        self.db.add("Abc abc abc","Abc abc")
+        size = self.db.maxRequestWordCount()
+        self.assertEqual(size,4)
+
+    def test_maxAnswerWordCount(self):
+        self.db.add("Abc abc abc ccc","Abc abc abc")
+        self.db.add("Abc abc abc","Abc abc")
+        size = self.db.maxAnswerWordCount()
+        self.assertEqual(size,3)
+
+    def test_maxRequestWordCount_empty(self):
+        size = self.db.maxRequestWordCount()
+        self.assertEqual(size,0)
+
+    def test_maxAnswerWordCount_empty(self):
+        size = self.db.maxAnswerWordCount()
+        self.assertEqual(size,0)
 
 class TrainerTest(unittest.TestCase):
     def setUp(self):
         from trainer import Trainer
         from database import TrainingDataBase,WordDataBase
 
-        self.tr = Trainer(WordDataBase(),TrainingDataBase())
+        self.tr_empty = Trainer(WordDataBase(),TrainingDataBase())
+
+        wdb = WordDataBase()
+        wdb.addWord("aaa")
+        wdb.addWord("bbb")
+        wdb.addWord("ccc")
+        tdb = TrainingDataBase()
+        tdb.add("aaa bbb ccc","ccc bbb")
+        tdb.add("aaa ccc","ccc ccc")
+
+        self.tr_notempty = Trainer(wdb,tdb)
 
     def test_init_invalidinput(self):
         from trainer import Trainer,TrainerException
@@ -194,20 +230,27 @@ class TrainerTest(unittest.TestCase):
     def test_train_invalidinput(self):
         from trainer import TrainerException
         with self.assertRaises(TrainerException):
-            self.tr.train(None)
+            self.tr_empty.train(None)
 
-    def test_train_invalidinput(self):
+    def test_train_validinput_empty(self):
         from brain import Brain
+        from trainer import TrainerException
 
-        self.tr.train(Brain())
+        with self.assertRaises(TrainerException):
+            self.tr_empty.train(Brain())
+
+    def test_train_validinput(self):
+        from brain import Brain
+        from trainer import TrainerException
+
+        self.tr_notempty.train(Brain())
 
     def test_prepareDataSet(self):
-        data = self.tr._prepareDataSet()
+        data = self.tr_notempty._prepareDataSet()
+        self.assertIn(((0,1,2),(2,1)),data.items())
+        self.assertIn(((0, 2),(2, 2)),data.items())
 
-        self.assertNotEqual(data,[])
-
-
-class TestBrain(unittest.TestCase):
+class BrainTest(unittest.TestCase):
     def setUp(self):
         from brain import Brain
 
@@ -217,18 +260,29 @@ class TestBrain(unittest.TestCase):
         from brain import BrainException
 
         with self.assertRaises(BrainException):
-            self.br.configure(None,None,None)
+            self.br.configure(None,None)
 
     def test_configure_validinput(self):
         from brain import BrainException
 
-        self.br.configure(1,1,1)
+        self.br.configure(1,1)
 
     def test_learn_invalidinput(self):
         from brain import BrainException
 
         with self.assertRaises(BrainException):
             self.br.learn(None)
+
+    def test_learn_validinput(self):
+        from brain import BrainException
+
+        self.br.configure(2,2)
+        data = {}
+        data[(1,2,3)] = (1,2)
+        data[(2,2)] = (2,2)
+        data[(1,)] = (3,3)
+
+        self.br.learn(data)
 
 if __name__ == "__main__":
     unittest.main()
