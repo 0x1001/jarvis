@@ -43,3 +43,26 @@ class BrainTest(unittest.TestCase):
 
         normalized_data = self.br._normalize([1,2,3],3)
         self.assertEqual(normalized_data,[1,2,3])
+
+    def test_think_exception(self):
+        from brain import BrainException
+
+        with self.assertRaises(BrainException):
+            self.br.think((1,1))
+
+    def test_think(self):
+        from brain import BrainException
+
+        self.br.configure(2,2)
+        data = {}
+        data[(1,2,3)] = (1,2)
+        data[(2,2)] = (2,2)
+        data[(1,)] = (3,3)
+
+        self.br.learn(data)
+
+        output_data = self.br.think((1,1))
+
+        self.assertEqual(len(output_data),2)
+        self.assertIsInstance(output_data[0],int)
+        self.assertIsInstance(output_data[1],int)
