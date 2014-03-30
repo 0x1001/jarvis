@@ -9,11 +9,14 @@ class Jarvis(object):
 
         Attributes:
         _brain          - Brain object
+        _word_db        - Words database
+        _traning_db     - Training database
     """
     def __init__(self):
         import brain
         self._brain = brain.Brain()
         self._word_db = None
+        self._traning_db = None
 
     def respond(self,request):
         """
@@ -41,24 +44,36 @@ class Jarvis(object):
 
         return answer
 
-    def dictionary(self,word_database):
+    def createWordsDataBase(self,builder):
         """
             This method sets words database
 
             Input:
-            word_database       - Word database
+            builder         - Word database builder
 
             Returns:
             Nothing
         """
-        self._word_db = word_database
+        self._word_db = builder.generateDataBase()
 
-    def train(self,training_database):
+    def createTrainingDataBase(self,builder):
+        """
+            This method builds traning database
+
+            Input:
+            builder         - Traning database builder
+
+            Returns:
+            Nothing
+        """
+        self._traning_db = builder.generateDataBase()
+
+    def train(self):
         """
             Trains Jarvis brain
 
             Input:
-            Traning database
+            Nothing
 
             Returns:
             Nothing
@@ -66,6 +81,7 @@ class Jarvis(object):
         from trainer import Trainer
 
         if self._word_db == None: raise JarvisException("Don't have dictionary.")
+        if self._traning_db == None: raise JarvisException("Don't have traning database.")
 
-        trainer = Trainer(self._word_db,training_database)
+        trainer = Trainer(self._word_db,self._traning_db)
         trainer.train(self._brain)

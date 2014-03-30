@@ -11,6 +11,9 @@ from worddatabasetest import *
 from wordparsertest import *
 from lowleveltest import *
 from jarvistest import *
+from worddatabasebuildertest import *
+from trainingdatabasebuildertest import *
+from databasebuildertest import *
 
 if __name__ == "__main__":
     unittest.main()

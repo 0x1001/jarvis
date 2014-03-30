@@ -31,9 +31,9 @@ class WordParser(object):
 
         if not isinstance(self._text,str): raise WordParserException("Not a string!")
 
-        word_re = re.compile("[a-zA-Z]*")
+        word_re = re.compile("[a-zA-Z]+")
         words = set()
         for word in word_re.findall(self._text):
-                words.add(word.lower())
+            words.add(word.lower())
 
         return words

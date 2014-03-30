@@ -16,6 +16,7 @@ class WordParserTest(unittest.TestCase):
         self.assertIn("foobar",words)
         self.assertNotIn("foo123",words)
         self.assertNotIn("bar_bar",words)
+        self.assertNotIn("",words)
 
     def test_wordsList_invalidinput(self):
         from database import WordParser,WordParserException

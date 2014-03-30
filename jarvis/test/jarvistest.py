@@ -6,18 +6,24 @@ class JarvisTest(unittest.TestCase):
 
         self.he = Jarvis()
 
-    def _word_database(self):
-        from database import WordDataBase
+    def _word_database_builder(self):
+        from database import WordDataBaseBuilder
 
-        db = WordDataBase()
-        db.addWord("aaa")
-        db.addWord("bbb")
-        db.addWord("ccc")
+        db_builder = WordDataBaseBuilder()
+        db_builder.addTxtFile("sample.txt")
 
-        return db
+        return db_builder
+
+    def _traning_database_builder(self):
+        from database import TrainingDataBaseBuilder
+
+        builder = TrainingDataBaseBuilder()
+        builder.addTxtFile("traning_sample.txt")
+
+        return builder
 
     def test_dictionary(self):
-        self.he.dictionary(self._word_database())
+        self.he.createWordsDataBase(self._word_database_builder())
 
     def test_respond_exception(self):
         from jarvis import JarvisException
@@ -28,35 +34,26 @@ class JarvisTest(unittest.TestCase):
     def test_respond_exception2(self):
         from jarvis import JarvisException
 
-        self.he.dictionary(self._word_database())
+        self.he.createWordsDataBase(self._word_database_builder())
 
         with self.assertRaises(JarvisException):
-            self.he.respond("aaa bbb ccc kkk")
+            self.he.respond("aaa bbb ccc www")
 
     def test_train_exception(self):
         from jarvis import JarvisException
 
         with self.assertRaises(JarvisException):
-            self.he.train(None)
+            self.he.train()
 
     def test_train(self):
-        from database import TrainingDataBase
-
-        tdb = TrainingDataBase()
-        tdb.add("aaa bbb ccc","aaa aaa")
-
-        self.he.dictionary(self._word_database())
-        self.he.train(tdb)
+        self.he.createWordsDataBase(self._word_database_builder())
+        self.he.createTrainingDataBase(self._traning_database_builder())
+        self.he.train()
 
     def test_respond(self):
-        from database import TrainingDataBase
-
-        tdb = TrainingDataBase()
-        tdb.add("aaa bbb ccc","aaa aaa")
-        tdb.add("aaa ccc","aaa ccc")
-
-        self.he.dictionary(self._word_database())
-        self.he.train(tdb)
+        self.he.createWordsDataBase(self._word_database_builder())
+        self.he.createTrainingDataBase(self._traning_database_builder())
+        self.he.train()
 
         answer = self.he.respond("aaa bbb ccc")
 
