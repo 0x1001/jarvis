@@ -29,17 +29,18 @@ class Jarvis(object):
             answer
         """
         from database import DataBaseException
+        from database import WordParser
 
         if self._word_db == None: raise JarvisException("Don't have dictionary.")
 
         try:
-            request = tuple(self._word_db.multipleWordId(request.split(" ")))
+            request_tuple = tuple(self._word_db.multipleWordId(WordParser(request).wordsList()))
         except DataBaseException as error: raise JarvisException("Don't understand: " + request)
 
-        answer = self._brain.think(request)
+        answer_tuple = self._brain.think(request_tuple)
 
         try:
-            answer = " ".join(self._word_db.multipleIdWord(answer))
+            answer = " ".join(self._word_db.multipleIdWord(answer_tuple))
         except DataBaseException as error: raise JarvisException("Cannot replay to this request: " + request)
 
         return answer

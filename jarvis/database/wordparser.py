@@ -13,9 +13,13 @@ class WordParser(object):
 
         Variables:
         _text           - Text contents
+        _word_re        - Regular expression for a word
     """
     def __init__(self,text):
+        import re
+
         self._text = text
+        self._word_re = re.compile("[a-zA-Z]+")
 
     def wordsList(self):
         """
@@ -27,13 +31,28 @@ class WordParser(object):
             Returns:
             list of words
         """
-        import re
-
         if not isinstance(self._text,str): raise WordParserException("Not a string!")
 
-        word_re = re.compile("[a-zA-Z]+")
+        words = list()
+        for word in self._word_re.findall(self._text):
+            words.append(word.lower())
+
+        return words
+
+    def wordsSet(self):
+        """
+            Exctracts words from text
+
+            Input:
+            text        - Input text string
+
+            Returns:
+            list of words
+        """
+        if not isinstance(self._text,str): raise WordParserException("Not a string!")
+
         words = set()
-        for word in word_re.findall(self._text):
+        for word in self._word_re.findall(self._text):
             words.add(word.lower())
 
         return words

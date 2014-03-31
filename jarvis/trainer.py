@@ -54,6 +54,8 @@ class Trainer(object):
         dataset = {}
 
         for request,answer in self._traning_db.getAll():
-            dataset[tuple(self._word_db.multipleWordId(request.split(" ")))] = tuple(self._word_db.multipleWordId(answer.split(" ")))
+            request = [ word.strip() for word in request.split(" ") if word != ""]
+            answer = [ word.strip() for word in answer.split(" ") if word != ""]
+            dataset[tuple(self._word_db.multipleWordId(request))] = tuple(self._word_db.multipleWordId(answer))
 
         return dataset

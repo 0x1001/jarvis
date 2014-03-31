@@ -63,9 +63,10 @@ class WordDataBaseBuilder(DataBaseBuilder):
             try: contents = lowlevel.readFileContents(file_path)
             except lowlevel.LowLevelException as error: raise DataBaseBuilderException("Cannot open: " + file_path + " . Error: " + str(error))
 
-            words = words.union(WordParser(contents).wordsList())
+            words = words.union(WordParser(contents).wordsSet())
 
         word_db = WordDataBase()
+        word_db.addWord("") # Index 0 is not used.
         for word in words: word_db.addWord(word)
 
         return word_db
@@ -88,6 +89,7 @@ class TrainingDataBaseBuilder(DataBaseBuilder):
             Training database
         """
         from database import TrainingDataBase
+        from wordparser import WordParser
         import lowlevel
 
         database = TrainingDataBase()
@@ -98,8 +100,9 @@ class TrainingDataBaseBuilder(DataBaseBuilder):
 
             for line in contents.split("\n"):
                 data = line.split(";")
-                request = data[0]
-                answer = data[1]
-                database.add(request,answer)
+                if len(data) == 2:
+                    request = " ".join(WordParser(data[0]).wordsList())
+                    answer = " ".join(WordParser(data[1]).wordsList())
+                    database.add(request,answer)
 
         return database

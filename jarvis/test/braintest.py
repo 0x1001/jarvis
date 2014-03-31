@@ -44,6 +44,19 @@ class BrainTest(unittest.TestCase):
         normalized_data = self.br._normalize([1,2,3],3)
         self.assertEqual(normalized_data,[1,2,3])
 
+    def test_denormalize(self):
+        denormalized_data = self.br._denormalize([1,2,3])
+        self.assertEqual(denormalized_data,[1,2,3])
+
+        denormalized_data = self.br._denormalize([1,2,0,3,0])
+        self.assertEqual(denormalized_data,[1,2,3])
+
+        denormalized_data = self.br._denormalize([0,0,1,2,3])
+        self.assertEqual(denormalized_data,[1,2,3])
+
+        denormalized_data = self.br._denormalize([0,0,0])
+        self.assertEqual(denormalized_data,[])
+
     def test_think_exception(self):
         from brain import BrainException
 

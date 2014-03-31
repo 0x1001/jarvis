@@ -55,7 +55,7 @@ class JarvisTest(unittest.TestCase):
         self.he.createTrainingDataBase(self._traning_database_builder())
         self.he.train()
 
-        answer = self.he.respond("aaa bbb ccc")
+        answer = self.he.respond("aaa bbb_1 ccc")
 
         #self.assertEqual(answer,"aaa aaa") #Neural network sometimes does not answer correctly
         self.assertIsInstance(answer,str)

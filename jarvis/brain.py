@@ -62,7 +62,7 @@ class Brain(object):
             input = self._normalize(input,self._input)
             output = self._normalize(output,self._output)
             data.addSample(input,output)
-            data.addSample(input,output)
+            data.addSample(input,output)# For better learning 2x
 
         trainer = BackpropTrainer(self._net, data)
         trainer.trainUntilConvergence()
@@ -99,3 +99,15 @@ class Brain(object):
             data += (0,)*(norm - len(data))
 
         return data
+
+    def _denormalize(self,data):
+        """
+            Removes zeros from data
+
+            Input:
+            data        - List with int
+
+            Returns:
+            data without zeros
+        """
+        return [element for element in data if element != 0]
