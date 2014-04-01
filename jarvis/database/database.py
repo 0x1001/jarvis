@@ -56,7 +56,7 @@ class WordDataBase(object):
             Returns:
             word
         """
-        if not isinstance(id,int) or not id >= 0: raise DataBaseException("Bad word id.")
+        if not isinstance(id,int) or not id >= 0: raise DataBaseException("Bad word id: " + str(id))
 
         try:
             return self._database[id]

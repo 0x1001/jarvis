@@ -35,13 +35,13 @@ class Jarvis(object):
 
         try:
             request_tuple = tuple(self._word_db.multipleWordId(WordParser(request).wordsList()))
-        except DataBaseException as error: raise JarvisException("Don't understand: " + request)
+        except DataBaseException as error: raise JarvisException("Don't understand: " + request + " . Error: " + str(error))
 
         answer_tuple = self._brain.think(request_tuple)
 
         try:
             answer = " ".join(self._word_db.multipleIdWord(answer_tuple))
-        except DataBaseException as error: raise JarvisException("Cannot replay to this request: " + request)
+        except DataBaseException as error: raise JarvisException("Cannot replay to this request: " + request + " . Error: " + str(error))
 
         return answer
 
