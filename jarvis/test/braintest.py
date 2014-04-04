@@ -2,29 +2,29 @@ import unittest
 
 class BrainTest(unittest.TestCase):
     def setUp(self):
-        from brain import Brain
+        from neural import Brain
 
         self.br = Brain()
 
     def test_configure_invalidinput(self):
-        from brain import BrainException
+        from neural import BrainException
 
         with self.assertRaises(BrainException):
             self.br.configure(None,None)
 
     def test_configure_validinput(self):
-        from brain import BrainException
+        from neural import BrainException
 
         self.br.configure(1,1)
 
     def test_learn_invalidinput(self):
-        from brain import BrainException
+        from neural import BrainException
 
         with self.assertRaises(BrainException):
             self.br.learn(None)
 
     def test_learn_validinput(self):
-        from brain import BrainException
+        from neural import BrainException
 
         self.br.configure(2,2)
         data = {}
@@ -58,13 +58,13 @@ class BrainTest(unittest.TestCase):
         self.assertEqual(denormalized_data,[])
 
     def test_think_exception(self):
-        from brain import BrainException
+        from neural import BrainException
 
         with self.assertRaises(BrainException):
             self.br.think((1,1))
 
     def test_think(self):
-        from brain import BrainException
+        from neural import BrainException
 
         self.br.configure(2,2)
         data = {}

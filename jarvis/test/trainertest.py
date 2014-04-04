@@ -29,14 +29,14 @@ class TrainerTest(unittest.TestCase):
             self.tr_empty.train(None)
 
     def test_train_validinput_empty(self):
-        from brain import Brain
+        from neural import Brain
         from trainer import TrainerException
 
         with self.assertRaises(TrainerException):
             self.tr_empty.train(Brain())
 
     def test_train_validinput(self):
-        from brain import Brain
+        from neural import Brain
         from trainer import TrainerException
 
         self.tr_notempty.train(Brain())

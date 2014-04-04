@@ -37,7 +37,7 @@ class Brain(object):
 
         self._input = input
         self._output = output
-        self._hidden = int(round((input + output)*2/3))
+        self._hidden = int(round((input + output)*2/3)) + 20
 
         self._net = buildNetwork(self._input,self._hidden,self._output)
 
@@ -53,6 +53,7 @@ class Brain(object):
         """
         from pybrain.supervised.trainers import BackpropTrainer
         from pybrain.datasets import SupervisedDataSet
+        from neuraltrainer import NeuralTrainer
 
         if self._net == None: raise BrainException("Brain is not configured!")
         if dataset == {}: raise BrainException("Dataset for learning is empty.")
@@ -64,8 +65,8 @@ class Brain(object):
             data.addSample(input,output)
             data.addSample(input,output)# For better learning 2x
 
-        trainer = BackpropTrainer(self._net, data)
-        trainer.trainUntilConvergence()
+        trainer = NeuralTrainer(self._net, data)
+        trainer.simpleTrain()
 
     def think(self,data):
         """
@@ -80,7 +81,7 @@ class Brain(object):
         if self._net == None: raise BrainException("Brain is not configured!")
 
         data = self._normalize(data,self._input)
-        return map(lambda data: int(round(data)),self._net.activate(data))
+        return self._denormalize(map(lambda data: int(round(data)),self._net.activate(data)))
 
     def _normalize(self,data,norm):
         """

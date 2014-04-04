@@ -31,7 +31,7 @@ class Trainer(object):
             Returns:
             Nothing
         """
-        from brain import Brain,BrainException
+        from neural import Brain,BrainException
 
         if not isinstance(brain_instance,Brain):
             raise TrainerException("Bad input. Has to be Brain object.")

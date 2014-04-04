@@ -13,8 +13,8 @@ class Jarvis(object):
         _traning_db     - Training database
     """
     def __init__(self):
-        import brain
-        self._brain = brain.Brain()
+        from neural import Brain
+        self._brain = Brain()
         self._word_db = None
         self._traning_db = None
 

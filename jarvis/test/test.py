@@ -14,6 +14,7 @@ from jarvistest import *
 from worddatabasebuildertest import *
 from trainingdatabasebuildertest import *
 from databasebuildertest import *
+from neuraltrainertest import *
 
 if __name__ == "__main__":
     unittest.main()
