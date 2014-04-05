@@ -11,12 +11,14 @@ class Jarvis(object):
         _brain          - Brain object
         _word_db        - Words database
         _traning_db     - Training database
+        _abilities_db   - Abilities database
     """
     def __init__(self):
         from neural import Brain
         self._brain = Brain()
         self._word_db = None
         self._traning_db = None
+        self._abilities_db = None
 
     def respond(self,request):
         """
@@ -68,6 +70,18 @@ class Jarvis(object):
             Nothing
         """
         self._traning_db = builder.generateDataBase()
+
+    def createAbilitiesDataBase(self,builder):
+        """
+            This method builds abilities database
+
+            Input:
+            builder     - Abilities builder
+
+            Returns:
+            Nothing
+        """
+        self._abilities_db = builder.generateDataBase()
 
     def train(self):
         """

@@ -15,8 +15,9 @@ from worddatabasebuildertest import *
 from trainingdatabasebuildertest import *
 from databasebuildertest import *
 from neuraltrainertest import *
-from abilitiestest import *
-from abilitiesbuilderstest import *
+from abilitiesdatabasetest import *
+from abilitiesdatabasebuilderstest import *
+from abilitietest import *
 
 if __name__ == "__main__":
     unittest.main()

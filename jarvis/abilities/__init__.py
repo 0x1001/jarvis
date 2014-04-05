@@ -1,4 +1,3 @@
-from abilities import Abilities,AbilitiesException
-from abilitiesbuilder import AbilitiesBuilder,AbilitiesBuilderException
+from abilitie import Abilitie,AbilitieException
 
-__all__ = ["Abilities","AbilitiesException","AbilitiesBuilder","AbilitiesBuilderException"]
+__all__ = ["Abilitie","AbilitieException"]

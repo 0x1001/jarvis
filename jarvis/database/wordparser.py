@@ -19,7 +19,7 @@ class WordParser(object):
         import re
 
         self._text = text
-        self._word_re = re.compile("[a-zA-Z]+")
+        self._word_re = re.compile("[a-zA-Z]+|\[[0-9]+\]")
 
     def wordsList(self):
         """

@@ -1,25 +1,23 @@
 ################################################################################
 ################################### Class ######################################
 ################################################################################
-class AbilitiesException(Exception): pass
+class AbilitieException(Exception): pass
 
-class Abilities(list):
+class Abilitie(object):
     """
-        List of Jarivs abilities
+        Abilitie abstract class
 
         Attributes:
 
     """
-    def append(self,function):
+    def execute(self):
         """
-            Adds new abilitie
+            Executes abilite
 
             Input:
-            function        - Function ref
+            Nothing
 
             Returns:
             Nothing
         """
-        if not hasattr(function, '__call__'): raise AbilitiesException("Not a function!")
-
-        super(Abilities,self).append(function)
+        raise AbilitieException("Not implemented.")

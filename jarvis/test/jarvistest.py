@@ -22,6 +22,11 @@ class JarvisTest(unittest.TestCase):
 
         return builder
 
+    def _abilities_builder(self):
+        from database import AbilitiesDataBaseBuilder
+
+        return AbilitiesDataBaseBuilder()
+
     def test_dictionary(self):
         self.he.createWordsDataBase(self._word_database_builder())
 
@@ -38,6 +43,9 @@ class JarvisTest(unittest.TestCase):
 
         with self.assertRaises(JarvisException):
             self.he.respond("aaa bbb ccc www")
+
+    def test_createAbilitiesDataBase(self):
+        self.he.createAbilitiesDataBase(self._abilities_builder())
 
     def test_train_exception(self):
         from jarvis import JarvisException
@@ -56,6 +64,7 @@ class JarvisTest(unittest.TestCase):
         self.he.train()
 
         answer = self.he.respond("aaa bbb_1 ccc")
+        self.assertEqual(answer,"abc abc zzz") #Neural network sometimes does not answer correctly
 
-        #self.assertEqual(answer,"aaa aaa") #Neural network sometimes does not answer correctly
-        self.assertIsInstance(answer,str)
+        answer = self.he.respond("abc abc")
+        self.assertEqual(answer,"abc test")

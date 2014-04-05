@@ -106,3 +106,29 @@ class TrainingDataBaseBuilder(DataBaseBuilder):
                     database.add(request,answer)
 
         return database
+
+class AbilitiesDataBaseBuilder(object):
+    """
+        Abilities builder
+
+        Attributes:
+
+    """
+    def generateDataBase(self):
+        """
+            Generates abilities list
+
+            Input:
+            Nothing
+
+            Returns:
+            Abilities
+        """
+        from database import AbilitiesDataBase
+        from abilities import test
+
+        abilities_list = AbilitiesDataBase()
+        abilities_list.addAbilitie(test.Test())
+
+        return abilities_list
+

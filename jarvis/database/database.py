@@ -149,3 +149,43 @@ class TrainingDataBase(object):
         """
         try: return max(map(lambda request: len(request.split(" ")),self._database.values()))
         except ValueError: return 0
+
+class AbilitiesDataBase(object):
+    """
+        List of Jarivs abilities
+
+        Attributes:
+        _database       - List of abilities
+    """
+    def __init__(self):
+        self._database = []
+
+    def addAbilitie(self,ab):
+        """
+            Adds new abilitie
+
+            Input:
+            ab          - Abilitie object
+
+            Returns:
+            Nothing
+        """
+        from abilities import Abilitie
+
+        if not isinstance(ab,Abilitie): raise DataBaseException("Not an Abilitie!")
+
+        self._database.append(ab)
+
+    def getAbilitie(self,id):
+        """
+            Returns abilitie that matches id
+
+            Input:
+            id      - Abilitie aid
+
+            Returns:
+            Abilitie
+        """
+        try: return self._database[id]
+        except IndexError: raise DataBaseException("Abilitie not found. Index: " + str(id))
+

@@ -7,7 +7,7 @@ class WordParserTest(unittest.TestCase):
     def test_wordsList_validinput(self):
         from database import WordParser
 
-        contents = "  dummy   foo123  _ bar_bar dummy foobar"
+        contents = "  dummy   foo123  _ bar_bar dummy foobar [1] [22] kkk [1 zzz"
 
         parser = WordParser(contents)
         words = parser.wordsList()
@@ -20,6 +20,10 @@ class WordParserTest(unittest.TestCase):
         self.assertEqual(words[3],"bar")
         self.assertEqual(words[4],"dummy")
         self.assertEqual(words[5],"foobar")
+        self.assertEqual(words[6],"[1]")
+        self.assertEqual(words[7],"[22]")
+        self.assertEqual(words[8],"kkk")
+        self.assertNotIn("[1",words)
         self.assertNotIn("foo123",words)
         self.assertNotIn("bar_bar",words)
         self.assertNotIn("",words)

@@ -2,3 +2,4 @@ abc  abc  abc ; abc  abc  abc
 abc abc ccc ; abc abc_1  kkk
 zzz ; bbb
 aaa bbb ccc ; abc abc zzz
+abc  abc ; abc [0]
