@@ -3,17 +3,17 @@ import unittest
 class TrainerTest(unittest.TestCase):
     def setUp(self):
         from trainer import Trainer
-        from database import TrainingDataBase,WordDataBase
+        from database import TrainingDataBase,WordDataBase,WordRecord
 
         self.tr_empty = Trainer(WordDataBase(),TrainingDataBase())
 
         wdb = WordDataBase()
-        wdb.addWord("aaa")
-        wdb.addWord("bbb")
-        wdb.addWord("ccc")
+        wdb.addWord(WordRecord("aaa"))
+        wdb.addWord(WordRecord("bbb"))
+        wdb.addWord(WordRecord("ccc"))
         tdb = TrainingDataBase()
-        tdb.add("aaa bbb ccc","ccc bbb")
-        tdb.add("aaa ccc","ccc ccc")
+        tdb.add([WordRecord("aaa"),WordRecord("bbb"),WordRecord("ccc")],[WordRecord("ccc"),WordRecord("bbb")])
+        tdb.add([WordRecord("aaa"),WordRecord("ccc")],[WordRecord("ccc"),WordRecord("ccc")])
 
         self.tr_notempty = Trainer(wdb,tdb)
 

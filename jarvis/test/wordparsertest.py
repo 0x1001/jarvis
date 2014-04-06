@@ -6,6 +6,7 @@ class WordParserTest(unittest.TestCase):
 
     def test_wordsList_validinput(self):
         from database import WordParser
+        from database import WordRecord, AbilitieRecord
 
         contents = "  dummy   foo123  _ bar_bar dummy foobar [1] [22] kkk [1 zzz"
 
@@ -14,19 +15,21 @@ class WordParserTest(unittest.TestCase):
 
         self.assertIsInstance(words,list)
 
-        self.assertEqual(words[0],"dummy")
-        self.assertEqual(words[1],"foo")
-        self.assertEqual(words[2],"bar")
-        self.assertEqual(words[3],"bar")
-        self.assertEqual(words[4],"dummy")
-        self.assertEqual(words[5],"foobar")
-        self.assertEqual(words[6],"[1]")
-        self.assertEqual(words[7],"[22]")
-        self.assertEqual(words[8],"kkk")
-        self.assertNotIn("[1",words)
-        self.assertNotIn("foo123",words)
-        self.assertNotIn("bar_bar",words)
-        self.assertNotIn("",words)
+        self.assertEqual(words[0],WordRecord("dummy"))
+        self.assertEqual(words[1],WordRecord("foo"))
+        self.assertEqual(words[2],WordRecord("bar"))
+        self.assertEqual(words[3],WordRecord("bar"))
+        self.assertEqual(words[4],WordRecord("dummy"))
+        self.assertEqual(words[5],WordRecord("foobar"))
+        self.assertEqual(words[6],AbilitieRecord("[1]"))
+        self.assertEqual(words[7],AbilitieRecord("[22]"))
+        self.assertEqual(words[8],WordRecord("kkk"))
+
+        self.assertIn(WordRecord("kkk"),words)
+        self.assertNotIn(WordRecord("[1"),words)
+        self.assertNotIn(WordRecord("foo123"),words)
+        self.assertNotIn(WordRecord("bar_bar"),words)
+        self.assertNotIn(WordRecord(""),words)
 
     def test_wordsList_invalidinput(self):
         from database import WordParser,WordParserException
@@ -44,6 +47,7 @@ class WordParserTest(unittest.TestCase):
 
     def test_wordsSet(self):
         from database import WordParser
+        from database import WordRecord
 
         contents = "dummy foo123 bar_bar dummy foobar"
 
@@ -52,8 +56,33 @@ class WordParserTest(unittest.TestCase):
 
         self.assertIsInstance(words,set)
 
-        self.assertIn("dummy",words)
-        self.assertIn("foobar",words)
-        self.assertNotIn("foo123",words)
-        self.assertNotIn("bar_bar",words)
-        self.assertNotIn("",words)
+        self.assertIn(WordRecord("dummy"),words)
+        self.assertIn(WordRecord("foobar"),words)
+        self.assertNotIn(WordRecord("foo123"),words)
+        self.assertNotIn(WordRecord("bar_bar"),words)
+        self.assertNotIn(WordRecord(""),words)
+
+    def test_convert_exception(self):
+        from database import WordParserException
+        from database import WordParser
+
+        parser = WordParser("")
+
+        with self.assertRaises(WordParserException):
+            record = parser._convert("1")
+
+        with self.assertRaises(WordParserException):
+            record = parser._convert("$A!")
+
+    def test_convert(self):
+        from database import WordParser
+        from database import AbilitieRecord,WordRecord
+
+        parser = WordParser("")
+        record = parser._convert("[1]")
+        self.assertIsInstance(record,AbilitieRecord)
+        self.assertEqual(record.getValue(),1)
+
+        record = parser._convert("aaa")
+        self.assertIsInstance(record,WordRecord)
+        self.assertEqual(record.getValue(),"aaa")

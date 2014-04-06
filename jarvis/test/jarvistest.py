@@ -61,6 +61,7 @@ class JarvisTest(unittest.TestCase):
     def test_respond(self):
         self.he.createWordsDataBase(self._word_database_builder())
         self.he.createTrainingDataBase(self._traning_database_builder())
+        self.he.createAbilitiesDataBase(self._abilities_builder())
         self.he.train()
 
         answer = self.he.respond("aaa bbb_1 ccc")

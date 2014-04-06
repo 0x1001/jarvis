@@ -23,12 +23,13 @@ class WordDataBase(object):
             Returns:
             Nothing
         """
-        if not isinstance(word,str): raise DataBaseException("Bad input. Not a string.")
+        from record import Record
+        if not isinstance(word,Record): raise DataBaseException("Bad input. Not a Record.")
 
         if not word in self._database:
             self._database.append(word)
         else:
-            raise DataBaseException("Word: " + word + " is already in database.")
+            raise DataBaseException("Word: " + word.getValue() + " is already in database.")
 
     def wordId(self,word):
         """
@@ -40,11 +41,12 @@ class WordDataBase(object):
             Returns:
             word id
         """
-        if not isinstance(word,str): raise DataBaseException("Bad input. Not a string.")
+        from record import Record
+        if not isinstance(word,Record): raise DataBaseException("Bad input. Not a string.")
 
         try:
             return self._database.index(word)
-        except ValueError: raise DataBaseException("Word: " + word + " is not in database!")
+        except ValueError: raise DataBaseException("Word: " + word.getValue() + " is not in database!")
 
     def idWord(self,id):
         """
@@ -108,9 +110,9 @@ class TrainingDataBase(object):
             Returns:
             Nothing
         """
-        if not isinstance(request,str) or not isinstance(answer,str): raise DataBaseException("Bad input. Not a string.")
+        if not isinstance(request,list) or not isinstance(answer,list): raise DataBaseException("Bad input. Not a tuple.")
 
-        self._database[request] = answer
+        self._database[tuple(request)] = tuple(answer)
 
     def getAll(self):
         """
@@ -122,7 +124,11 @@ class TrainingDataBase(object):
             Returns:
             list of request,list of answer
         """
-        return self._database.items()
+        returns_list = []
+        for key,item in self._database.items():
+            returns_list.append((list(key),list(item)))
+
+        return returns_list
 
     def maxRequestWordCount(self):
         """
@@ -134,7 +140,7 @@ class TrainingDataBase(object):
             Returns:
             Maximal count of words in requests
         """
-        try: return max(map(lambda request: len(request.split(" ")),self._database.keys()))
+        try: return max(map(lambda request: len(request),self._database.keys()))
         except ValueError: return 0
 
     def maxAnswerWordCount(self):
@@ -147,7 +153,7 @@ class TrainingDataBase(object):
             Returns:
             Maximal count of words in answers
         """
-        try: return max(map(lambda request: len(request.split(" ")),self._database.values()))
+        try: return max(map(lambda request: len(request),self._database.values()))
         except ValueError: return 0
 
 class AbilitiesDataBase(object):

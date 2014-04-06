@@ -11,4 +11,5 @@ class Test(Abilitie):
             Returns:
             Nothing
         """
-        return "test"
+        from database import WordRecord
+        return [WordRecord("test")]

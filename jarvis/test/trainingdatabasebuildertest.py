@@ -15,6 +15,7 @@ class TrainingDataBaseBuilderTest(unittest.TestCase):
 
     def test_generateDataBase(self):
         from database import TrainingDataBase,DataBaseException
+        from database import WordRecord
 
         self.builder.addTxtFile("traning_sample.txt")
         database = self.builder.generateDataBase()
@@ -22,7 +23,7 @@ class TrainingDataBaseBuilderTest(unittest.TestCase):
         self.assertIsInstance(database,TrainingDataBase)
 
         data = database.getAll()
-        self.assertIn(("abc abc abc","abc abc abc"),data)
-        self.assertIn(("abc abc ccc","abc abc kkk"),data)
-        self.assertIn(("zzz","bbb"),data)
-        self.assertNotIn(("aaa","aaa"),data)
+        self.assertIn(([WordRecord("abc"),WordRecord("abc"),WordRecord("abc")],[WordRecord("abc"),WordRecord("abc"),WordRecord("abc")]),data)
+        self.assertIn(([WordRecord("abc"),WordRecord("abc"),WordRecord("ccc")],[WordRecord("abc"),WordRecord("abc"),WordRecord("kkk")]),data)
+        self.assertIn(([WordRecord("zzz")],[WordRecord("bbb")]),data)
+        self.assertNotIn(([WordRecord("aaa")],[WordRecord("aaa")]),data)

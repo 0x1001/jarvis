@@ -18,6 +18,8 @@ from neuraltrainertest import *
 from abilitiesdatabasetest import *
 from abilitiesdatabasebuilderstest import *
 from abilitietest import *
+from bodytest import *
+from recordtest import *
 
 if __name__ == "__main__":
     unittest.main()

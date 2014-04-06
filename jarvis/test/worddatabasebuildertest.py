@@ -17,15 +17,16 @@ class WordDataBaseBuilderTest(unittest.TestCase):
 
     def test_generateDataBase(self):
         from database import WordDataBase,DataBaseException
+        from database import WordRecord
 
         self.builder.addTxtFile("sample.txt")
         database = self.builder.generateDataBase()
 
         self.assertIsInstance(database,WordDataBase)
 
-        database.wordId("aaa")
-        database.wordId("bbb")
+        database.wordId(WordRecord("aaa"))
+        database.wordId(WordRecord("bbb"))
 
         with self.assertRaises(DataBaseException):
-            database.wordId("www")
+            database.wordId(WordRecord("www"))
 

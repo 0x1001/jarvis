@@ -12,33 +12,37 @@ class TrainingDataBaseTest(unittest.TestCase):
             self.db.add(None,None)
 
     def test_add_validinput(self):
-        self.db.add("Abc abc abc","Abc abc abc")
+        from database import WordRecord
+        self.db.add([WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")],[WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")])
 
     def test_getAll_dbempty(self):
         data = self.db.getAll()
         self.assertEqual(data,[])
 
     def test_getAll_dbnotempty(self):
-        self.db.add("Abc abc abc","Abc abc abc")
-        self.db.add("Abc abc abc","kkk kkk kkk")
-        self.db.add("bbb bbb bbb","bbb bbb bbb")
-        self.db.add("ccc ccc ccc","ccc ccc ccc")
+        from database import WordRecord
+        self.db.add([WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")],[WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")])
+        self.db.add([WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")],[WordRecord("kkk"),WordRecord("kkk"),WordRecord("kkk")])
+        self.db.add([WordRecord("bbb"),WordRecord("bbb"),WordRecord("bbb")],[WordRecord("bbb"),WordRecord("bbb"),WordRecord("bbb")])
+        self.db.add([WordRecord("ccc"),WordRecord("ccc"),WordRecord("ccc")],[WordRecord("ccc"),WordRecord("ccc"),WordRecord("ccc")])
 
         data = self.db.getAll()
-        self.assertNotIn(("Abc abc abc","Abc abc abc"),data)
-        self.assertIn(("bbb bbb bbb","bbb bbb bbb"),data)
-        self.assertIn(("ccc ccc ccc","ccc ccc ccc"),data)
-        self.assertIn(("Abc abc abc","kkk kkk kkk"),data)
+        self.assertNotIn(([WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")],[WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")]),data)
+        self.assertIn(([WordRecord("bbb"),WordRecord("bbb"),WordRecord("bbb")],[WordRecord("bbb"),WordRecord("bbb"),WordRecord("bbb")]),data)
+        self.assertIn(([WordRecord("ccc"),WordRecord("ccc"),WordRecord("ccc")],[WordRecord("ccc"),WordRecord("ccc"),WordRecord("ccc")]),data)
+        self.assertIn(([WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")],[WordRecord("kkk"),WordRecord("kkk"),WordRecord("kkk")]),data)
 
     def test_maxRequestWordCount(self):
-        self.db.add("Abc abc abc ccc","Abc abc abc")
-        self.db.add("Abc abc abc","Abc abc")
+        from database import WordRecord
+        self.db.add([WordRecord("Abc"),WordRecord("abc"),WordRecord("abc"),WordRecord("ccc")],[WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")])
+        self.db.add([WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")],[WordRecord("Abc"),WordRecord("abc")])
         size = self.db.maxRequestWordCount()
         self.assertEqual(size,4)
 
     def test_maxAnswerWordCount(self):
-        self.db.add("Abc abc abc ccc","Abc abc abc")
-        self.db.add("Abc abc abc","Abc abc")
+        from database import WordRecord
+        self.db.add([WordRecord("Abc"),WordRecord("abc"),WordRecord("abc"),WordRecord("ccc")],[WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")])
+        self.db.add([WordRecord("Abc"),WordRecord("abc"),WordRecord("abc")],[WordRecord("Abc"),WordRecord("abc")])
         size = self.db.maxAnswerWordCount()
         self.assertEqual(size,3)
 

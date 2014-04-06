@@ -51,12 +51,9 @@ class Trainer(object):
             Returns:
             dataset
         """
-        from database import WordParser
         dataset = {}
 
         for request,answer in self._traning_db.getAll():
-            request = WordParser(request).wordsList()
-            answer = WordParser(answer).wordsList()
             dataset[tuple(self._word_db.multipleWordId(request))] = tuple(self._word_db.multipleWordId(answer))
 
         return dataset

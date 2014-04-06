@@ -56,6 +56,7 @@ class WordDataBaseBuilder(DataBaseBuilder):
         """
         from database import WordDataBase
         from wordparser import WordParser
+        from record import Record
         import lowlevel
 
         words = set()
@@ -66,7 +67,7 @@ class WordDataBaseBuilder(DataBaseBuilder):
             words = words.union(WordParser(contents).wordsSet())
 
         word_db = WordDataBase()
-        word_db.addWord("") # Index 0 is not used.
+        word_db.addWord(Record("")) # Index 0 is not used.
         for word in words: word_db.addWord(word)
 
         return word_db
@@ -101,8 +102,8 @@ class TrainingDataBaseBuilder(DataBaseBuilder):
             for line in contents.split("\n"):
                 data = line.split(";")
                 if len(data) == 2:
-                    request = " ".join(WordParser(data[0]).wordsList())
-                    answer = " ".join(WordParser(data[1]).wordsList())
+                    request = WordParser(data[0]).wordsList()
+                    answer = WordParser(data[1]).wordsList()
                     database.add(request,answer)
 
         return database
