@@ -2,7 +2,7 @@ from wordparser import WordParser,WordParserException
 from database import WordDataBase, DataBaseException,TrainingDataBase,AbilitiesDataBase
 from databasebuilder import WordDataBaseBuilder, DataBaseBuilderException
 from databasebuilder import TrainingDataBaseBuilder,AbilitiesDataBaseBuilder
-from record import Record,WordRecord,AbilitieRecord
+from record import Record,WordRecord,AbilityRecord
 
 __all__ = [ "WordParser",
             "WordParserException",
@@ -14,5 +14,5 @@ __all__ = [ "WordParser",
             "DataBaseBuilderException",
             "TrainingDataBaseBuilder",
             "AbilitieDataBaseBuilder",
-            "Record","WordRecord","AbilitieRecord"
+            "Record","WordRecord","AbilityRecord"
             ]

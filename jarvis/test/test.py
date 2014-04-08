@@ -17,7 +17,7 @@ from databasebuildertest import *
 from neuraltrainertest import *
 from abilitiesdatabasetest import *
 from abilitiesdatabasebuilderstest import *
-from abilitietest import *
+from abilitytest import *
 from bodytest import *
 from recordtest import *
 

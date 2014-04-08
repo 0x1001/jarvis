@@ -166,32 +166,32 @@ class AbilitiesDataBase(object):
     def __init__(self):
         self._database = []
 
-    def addAbilitie(self,ab):
+    def addAbility(self,ab):
         """
-            Adds new abilitie
+            Adds new ability
 
             Input:
-            ab          - Abilitie object
+            ab          - Ability object
 
             Returns:
             Nothing
         """
-        from abilities import Abilitie
+        from abilities import Ability
 
-        if not isinstance(ab,Abilitie): raise DataBaseException("Not an Abilitie!")
+        if not isinstance(ab,Ability): raise DataBaseException("Not an Ability!")
 
         self._database.append(ab)
 
-    def getAbilitie(self,id):
+    def getAbility(self,id):
         """
-            Returns abilitie that matches id
+            Returns ability that matches id
 
             Input:
-            id      - Abilitie aid
+            id      - Ability id
 
             Returns:
-            Abilitie
+            Ability
         """
         try: return self._database[id]
-        except IndexError: raise DataBaseException("Abilitie not found. Index: " + str(id))
+        except IndexError: raise DataBaseException("Ability not found. Index: " + str(id))
 

@@ -33,9 +33,9 @@ class WordRecord(Record):
     def __init__(self,value):
         super(WordRecord,self).__init__(value.lower())
 
-class AbilitieRecord(Record):
+class AbilityRecord(Record):
     def __init__(self,value):
         if isinstance(value,str):
             value = value.replace("[","")
             value = value.replace("]","")
-        super(AbilitieRecord,self).__init__(int(value))
+        super(AbilityRecord,self).__init__(int(value))

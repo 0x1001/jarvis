@@ -129,7 +129,7 @@ class AbilitiesDataBaseBuilder(object):
         from abilities import test
 
         abilities_list = AbilitiesDataBase()
-        abilities_list.addAbilitie(test.Test())
+        abilities_list.addAbility(test.Test())
 
         return abilities_list
 

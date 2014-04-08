@@ -12,23 +12,23 @@ class WordParser(object):
         This class parses text contents
 
         Variables:
-        ABILITIE        - Abilitie regex
+        ABILITY         - Ability regex
         WORD            - Word regex
         _text           - Text contents
         _word_re        - Regular expression for a word
-        _abilitie_re    - Regular expression for a abilitie
+        _ability_re     - Regular expression for a ability
         _combined_re    - Regular expression combined
     """
-    ABILITIE = "\[[0-9]+\]"
+    ABILITY = "\[[0-9]+\]"
     WORD = "[a-zA-Z]+"
 
     def __init__(self,text):
         import re
 
         self._text = text
-        self._abilitie_re = re.compile(self.ABILITIE)
+        self._ability_re = re.compile(self.ABILITY)
         self._word_re = re.compile(self.WORD)
-        self._combined_re = re.compile(self.WORD + "|" + self.ABILITIE)
+        self._combined_re = re.compile(self.WORD + "|" + self.ABILITY)
 
     def wordsList(self):
         """
@@ -76,11 +76,11 @@ class WordParser(object):
             Returns:
             Record
         """
-        from record import AbilitieRecord, WordRecord
+        from record import AbilityRecord, WordRecord
 
         if self._word_re.match(input_str):
             return WordRecord(input_str)
-        elif self._abilitie_re.match(input_str):
-            return AbilitieRecord(input_str)
+        elif self._ability_re.match(input_str):
+            return AbilityRecord(input_str)
         else:
             raise WordParserException("Cannot convert string to record: " + input_str)

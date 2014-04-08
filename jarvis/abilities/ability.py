@@ -1,18 +1,18 @@
 ################################################################################
 ################################### Class ######################################
 ################################################################################
-class AbilitieException(Exception): pass
+class AbilityException(Exception): pass
 
-class Abilitie(object):
+class Ability(object):
     """
-        Abilitie abstract class
+        Ability abstract class
 
         Attributes:
 
     """
     def execute(self):
         """
-            Executes abilite
+            Executes ability
 
             Input:
             Nothing
@@ -20,4 +20,4 @@ class Abilitie(object):
             Returns:
             Nothing
         """
-        raise AbilitieException("Not implemented.")
+        raise AbilityException("Not implemented.")

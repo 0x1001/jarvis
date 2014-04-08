@@ -7,7 +7,7 @@ class BodyTest(unittest.TestCase):
         from abilities import test
 
         ab_db = AbilitiesDataBase()
-        ab_db.addAbilitie(test.Test())
+        ab_db.addAbility(test.Test())
 
         self.b = Body()
         self.b.abilitiesDataBase(ab_db)
@@ -22,9 +22,9 @@ class BodyTest(unittest.TestCase):
         self.assertEqual(data,[])
 
     def test_do(self):
-        from database import AbilitieRecord,WordRecord
+        from database import AbilityRecord,WordRecord
 
-        answer = self.b.do([AbilitieRecord("[0]")])
+        answer = self.b.do([AbilityRecord("[0]")])
 
         for word in answer:
             self.assertIsInstance(word,WordRecord)
@@ -38,9 +38,9 @@ class BodyTest(unittest.TestCase):
         self.assertEqual(answer[1],WordRecord("bbb"))
 
     def test_do_exception(self):
-        from database import AbilitieRecord,WordRecord
+        from database import AbilityRecord,WordRecord
         from body import Body,BodyException
 
         b = Body()
         with self.assertRaises(BodyException):
-            b.do([AbilitieRecord("[0]")])
+            b.do([AbilityRecord("[0]")])

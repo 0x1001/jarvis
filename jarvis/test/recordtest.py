@@ -29,9 +29,9 @@ class RecordTest(unittest.TestCase):
         self.assertEqual(WordRecord("AAA").getValue(),"aaa")
         self.assertEqual(WordRecord("zzz").getValue(),"zzz")
 
-    def test_AbilitieRecord(self):
-        from database import AbilitieRecord
+    def test_AbilityRecord(self):
+        from database import AbilityRecord
         from database import Record
 
-        self.assertIsInstance(AbilitieRecord("[1]"),Record)
-        self.assertEqual(AbilitieRecord("[1]").getValue(),1)
+        self.assertIsInstance(AbilityRecord("[1]"),Record)
+        self.assertEqual(AbilityRecord("[1]").getValue(),1)

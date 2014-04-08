@@ -1,9 +1,9 @@
-from abilitie import Abilitie
+from ability import Ability
 
-class Test(Abilitie):
+class Test(Ability):
     def execute(self):
         """
-            Test abilitie
+            Test ability
 
             Input:
             Nothing

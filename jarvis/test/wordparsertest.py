@@ -6,7 +6,7 @@ class WordParserTest(unittest.TestCase):
 
     def test_wordsList_validinput(self):
         from database import WordParser
-        from database import WordRecord, AbilitieRecord
+        from database import WordRecord, AbilityRecord
 
         contents = "  dummy   foo123  _ bar_bar dummy foobar [1] [22] kkk [1 zzz"
 
@@ -21,8 +21,8 @@ class WordParserTest(unittest.TestCase):
         self.assertEqual(words[3],WordRecord("bar"))
         self.assertEqual(words[4],WordRecord("dummy"))
         self.assertEqual(words[5],WordRecord("foobar"))
-        self.assertEqual(words[6],AbilitieRecord("[1]"))
-        self.assertEqual(words[7],AbilitieRecord("[22]"))
+        self.assertEqual(words[6],AbilityRecord("[1]"))
+        self.assertEqual(words[7],AbilityRecord("[22]"))
         self.assertEqual(words[8],WordRecord("kkk"))
 
         self.assertIn(WordRecord("kkk"),words)
@@ -76,11 +76,11 @@ class WordParserTest(unittest.TestCase):
 
     def test_convert(self):
         from database import WordParser
-        from database import AbilitieRecord,WordRecord
+        from database import AbilityRecord,WordRecord
 
         parser = WordParser("")
         record = parser._convert("[1]")
-        self.assertIsInstance(record,AbilitieRecord)
+        self.assertIsInstance(record,AbilityRecord)
         self.assertEqual(record.getValue(),1)
 
         record = parser._convert("aaa")
