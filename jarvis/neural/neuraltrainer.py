@@ -8,6 +8,7 @@ class NeuralTrainer(BackpropTrainer):
     def simpleTrain(self):
         """
             Simple neural network trainer
+            This trainer overfits neural network
 
             Input:
             Nothing

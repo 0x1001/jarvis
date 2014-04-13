@@ -66,7 +66,7 @@ class Brain(object):
             data.addSample(input,output)# For better learning 2x
 
         trainer = NeuralTrainer(self._net, data)
-        trainer.simpleTrain()
+        trainer.trainUntilConvergence()
 
     def think(self,data):
         """
