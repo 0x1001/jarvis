@@ -19,3 +19,4 @@ if __name__ == "__main__":
     he.train()
 
     print he.respond("how are you")
+    print he.respond("what time is it")

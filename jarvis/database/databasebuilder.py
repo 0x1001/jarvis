@@ -126,10 +126,12 @@ class AbilitiesDataBaseBuilder(object):
             Abilities
         """
         from database import AbilitiesDataBase
-        from abilities import test
+        from abilities import a_test
+        from abilities import a_time
 
         abilities_list = AbilitiesDataBase()
-        abilities_list.addAbility(test.Test())
+        abilities_list.addAbility(a_test.Test())
+        abilities_list.addAbility(a_time.Time())
 
         return abilities_list
 

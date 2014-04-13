@@ -1,3 +1,4 @@
 how are you ; i am ok
 what is your name ; my name is jarvis
 where are you from ; i do not know
+what time is it ; it is [1]

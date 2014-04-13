@@ -4,10 +4,10 @@ class BodyTest(unittest.TestCase):
     def setUp(self):
         from body import Body
         from database import AbilitiesDataBase
-        from abilities import test
+        from abilities import a_test
 
         ab_db = AbilitiesDataBase()
-        ab_db.addAbility(test.Test())
+        ab_db.addAbility(a_test.Test())
 
         self.b = Body()
         self.b.abilitiesDataBase(ab_db)
