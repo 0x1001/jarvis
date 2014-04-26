@@ -18,6 +18,7 @@ class LowLevelTest(unittest.TestCase):
 
     def test_writeFileContents_invalidinput(self):
         import lowlevel
+        import sys
 
         contents = None
         path = self.__dummy_file
@@ -29,10 +30,11 @@ class LowLevelTest(unittest.TestCase):
         with self.assertRaises(lowlevel.LowLevelException):
             lowlevel.writeFileContents(path,contents)
 
-        contents = "AaAaba"
-        path = "c::\ffff:fff"
-        with self.assertRaises(lowlevel.LowLevelException):
-            lowlevel.writeFileContents(path,contents)
+        if sys.platform == "win32" or sys.platform == "win64":
+            contents = "AaAaba"
+            path = "c::\ffff:ffff"
+            with self.assertRaises(lowlevel.LowLevelException):
+                lowlevel.writeFileContents(path,contents)
 
     def test_readFileContents_filenotexists(self):
         import lowlevel
