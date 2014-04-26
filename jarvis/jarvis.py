@@ -16,9 +16,11 @@ class Jarvis(object):
     def __init__(self):
         from neural import Brain
         from body import Body
+        from voice import Voice
 
         self._brain = Brain()
         self._body = Body()
+        self._voice = Voice()
 
         self._word_db = None
         self._traning_db = None
@@ -54,6 +56,8 @@ class Jarvis(object):
         except BodyException as error: raise JarvisException("Cannot do this request: " + request + " . Error: " + str(error))
 
         answer = " ".join([word.getValue() for word in answer_tuple])
+
+        self._voice.speak(answer)
 
         return answer
 
