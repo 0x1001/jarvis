@@ -8,12 +8,16 @@ class Voice(object):
         This class is responsible for voice speaking
 
         Attributes:
-        _engine         - Speak engine
+        _volume     - Voice volume
+        _rate       - Voice rate
 
     """
     def __init__(self):
-        import pyttsx
-        self._engine = pyttsx.init()
+        try: import pyttsx
+        except ImportError: raise VoiceException("You have to install: pyttsx")
+
+        self._volume = 1.0
+        self._rate = 90
 
     def speak(self,sentence):
         """
@@ -25,41 +29,47 @@ class Voice(object):
             Returns:
             Nothing
         """
+        import pyttsx
+
+        engine = pyttsx.init()
+
         if isinstance(sentence,list):
             sentence = " ".join(sentence)
         elif isinstance(sentence,str): pass
         else:
             raise VoiceException
 
-        self._engine.say(sentence)
-        self._engine.runAndWait()
+        engine.setProperty('volume',self._volume)
+        engine.setProperty('rate',self._rate)
+        engine.say(sentence)
+        engine.runAndWait()
 
-    def _test(self):
+    def volume(self,value):
         """
-            This function tests pyttsx functionality
+            Sets voice volume
 
             Input:
-            Nothing
+            value       - Volume value
 
             Returns:
             Nothing
         """
-        self._engine.setProperty('volume',0.1)
-        self.speak("test")
-        self._engine.setProperty('volume',0.5)
-        self.speak("test")
-        self._engine.setProperty('volume',1)
-        self.speak("test")
+        if not isinstance(value,float): raise VoiceException("Volume value has to be float.")
+        if value < 0.0 or value > 1.0: raise VoiceException("Volume value has be between 0 and 1.")
 
-        self._engine.setProperty('rate',100)
-        self.speak("test")
-        self._engine.setProperty('rate',200)
-        self.speak("test")
-        self._engine.setProperty('rate',300)
-        self.speak("test")
+        self._volume = value
 
-        self._engine.setProperty('rate',200)
+    def rate(self,value):
+        """
+            Sets words rate per min
 
-        for idx,voice in enumerate(self._engine.getProperty("voices")):
-            self._engine.setProperty('voice', voice.id)
-            self.speak("voice " + str(idx + 1))
+            Input:
+            value   - Rate value (int)
+
+            Retruns:
+            Nothing
+        """
+        if not isinstance(value,int): raise VoiceException("Volume value has to be int.")
+        if value <= 0: raise VoiceException("Volume value has be grater than 0.")
+
+        self._rate = value
