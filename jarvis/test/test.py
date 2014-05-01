@@ -21,6 +21,7 @@ from abilitytest import *
 from bodytest import *
 from recordtest import *
 from voicetest import *
+from consoletest import *
 
 if __name__ == "__main__":
     unittest.main()

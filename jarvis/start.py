@@ -3,6 +3,8 @@ if __name__ == "__main__":
     from database import WordDataBaseBuilder
     from database import TrainingDataBaseBuilder
     from database import AbilitiesDataBaseBuilder
+    from interfaces import Console
+    import time
 
     wd_builder = WordDataBaseBuilder()
     wd_builder.addTxtFile("learning_material/traning.txt")
@@ -18,5 +20,8 @@ if __name__ == "__main__":
     he.createAbilitiesDataBase(ab_builder)
     he.train()
 
-    print he.respond("how are you")
-    print he.respond("what time is it")
+    console = Console()
+    console.jarvis(he)
+    console.start()
+
+    while True: time.sleep(10)
