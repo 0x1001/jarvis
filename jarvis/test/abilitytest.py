@@ -30,3 +30,15 @@ class TestTime(unittest.TestCase):
             self.assertIsInstance(element,WordRecord)
 
         self.assertFalse(result == [])
+
+class TestHello(unittest.TestCase):
+    def test_execute(self):
+        from abilities.a_hello import Hello
+        from database import WordRecord
+
+        result = Hello().execute()
+
+        for element in result:
+            self.assertIsInstance(element,WordRecord)
+
+        self.assertFalse(result == [])

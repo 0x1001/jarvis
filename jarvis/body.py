@@ -37,15 +37,19 @@ class Body(object):
         """
         from database import WordRecord,AbilityRecord
         from abilities import AbilityException
+        from database import DataBaseException
 
         if self._abilities_db == None: raise BodyException("Abilities database not given!")
 
         answer = []
         for record in request:
             if isinstance(record,AbilityRecord):
-                ability = self._abilities_db.getAbility(record.getValue())
+                try: ability = self._abilities_db.getAbility(record.getValue())
+                except DataBaseException as error: raise BodyException(error)
+
                 try: abilitie_answer = ability.execute()
                 except AbilityException as error: raise BodyException(error)
+
                 answer += abilitie_answer
             elif isinstance(record,WordRecord):
                 answer.append(record)

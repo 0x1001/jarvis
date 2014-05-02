@@ -37,6 +37,7 @@ class BodyTest(unittest.TestCase):
         self.assertEqual(answer[0],WordRecord("aaa"))
         self.assertEqual(answer[1],WordRecord("bbb"))
 
+
     def test_do_exception(self):
         from database import AbilityRecord,WordRecord
         from body import Body,BodyException
@@ -44,3 +45,6 @@ class BodyTest(unittest.TestCase):
         b = Body()
         with self.assertRaises(BodyException):
             b.do([AbilityRecord("[0]")])
+
+        with self.assertRaises(BodyException):
+            self.b.do([AbilityRecord("[1]")])
