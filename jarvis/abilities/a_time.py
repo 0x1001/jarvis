@@ -32,7 +32,7 @@ class Time(Ability):
         elif current.minute < 30:
             response = [WordRecord("close"),WordRecord("to"),WordRecord("half"),WordRecord("past"),hour]
         elif current.minute < 40:
-            response = [WordRecord("few"),WordRecord("minutes"),WordRecord("after"),WordRecord("half"),hour]
+            response = [WordRecord("few"),WordRecord("minutes"),WordRecord("after"),WordRecord("half"),WordRecord("past"),hour]
         elif current.minute < 45:
             response = [WordRecord("almost"),WordRecord("quarter"),WordRecord("to"),next_hour]
         elif current.minute < 50:
