@@ -134,7 +134,8 @@ class InnerVoiceDataBaseBuilder(DataBaseBuilder):
         for file_path in self._file_list:
             contents = self._readFileContents(file_path)
             for line in contents.split("\n"):
-                database.add(line)
+                if not line.strip() == "":
+                    database.add(line.strip())
 
         return database
 

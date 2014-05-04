@@ -17,10 +17,13 @@ class Jarvis(object):
         from neural import Brain
         from body import Body
         from voice import Voice
+        from neural import InnerVoice
 
         self._brain = Brain()
         self._body = Body()
         self._voice = Voice()
+        self._inner_voices = InnerVoice()
+        self._inner_voices.jarvis(self)
 
         self._word_db = None
         self._traning_db = None
@@ -85,6 +88,18 @@ class Jarvis(object):
         """
         self._traning_db = builder.generateDataBase()
 
+    def createInnerVoiceDatabase(self,builder):
+        """
+            This method builds internal voice database
+
+            Input:
+            builder     - Database builder
+
+            Returns:
+            Nothing
+        """
+        self._inner_voices.innerVoices(builder.generateDataBase())
+
     def createAbilitiesDataBase(self,builder):
         """
             This method builds abilities database
@@ -114,3 +129,15 @@ class Jarvis(object):
 
         trainer = Trainer(self._word_db,self._traning_db)
         trainer.train(self._brain)
+
+    def start(self):
+        """
+            This method starts Jarvis internals
+
+            Input:
+            Nothing
+
+            Returns:
+            Nothing
+        """
+        self._inner_voices.start()

@@ -3,6 +3,7 @@ if __name__ == "__main__":
     from database import WordDataBaseBuilder
     from database import TrainingDataBaseBuilder
     from database import AbilitiesDataBaseBuilder
+    from database import InnerVoiceDataBaseBuilder
     from interfaces import Console
     import time
 
@@ -12,13 +13,18 @@ if __name__ == "__main__":
     td_builder = TrainingDataBaseBuilder()
     td_builder.addTxtFile("learning_material/traning.txt")
 
+    iv_builder = InnerVoiceDataBaseBuilder()
+    iv_builder.addTxtFile("learning_material/inner_voices.txt")
+
     ab_builder = AbilitiesDataBaseBuilder()
 
     he = Jarvis()
     he.createWordsDataBase(wd_builder)
     he.createTrainingDataBase(td_builder)
     he.createAbilitiesDataBase(ab_builder)
+    he.createInnerVoiceDatabase(iv_builder)
     he.train()
+    he.start()
 
     console = Console()
     console.jarvis(he)

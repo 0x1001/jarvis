@@ -27,6 +27,11 @@ class JarvisTest(unittest.TestCase):
 
         return AbilitiesDataBaseBuilder()
 
+    def _innervoice_builder(self):
+        from database import InnerVoiceDataBaseBuilder
+
+        return InnerVoiceDataBaseBuilder()
+
     def test_dictionary(self):
         self.he.createWordsDataBase(self._word_database_builder())
 
@@ -69,3 +74,10 @@ class JarvisTest(unittest.TestCase):
 
         answer = self.he.respond("abc abc")
         self.assertEqual(answer,"abc test")
+
+    def test_createInnerVoiceDatabase(self):
+        self.he.createInnerVoiceDatabase(self._innervoice_builder())
+
+    def test_start(self):
+        self.he.createInnerVoiceDatabase(self._innervoice_builder())
+        self.he.start()

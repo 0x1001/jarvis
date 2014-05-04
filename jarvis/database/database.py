@@ -201,9 +201,8 @@ class InnerVoiceDataBase(object):
             element
         """
         import random
-
+        if len(self._database) == 0: raise DataBaseException("Empty database.")
         return list(self._database)[random.randint(0,len(self._database) - 1)]
-
 
 class AbilitiesDataBase(object):
     """

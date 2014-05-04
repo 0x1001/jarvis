@@ -8,8 +8,11 @@ class InnerVoiceTest(unittest.TestCase):
 
     def test_start(self):
         import jarvis
+        from database import InnerVoiceDataBase
 
+        self.innervoice.innerVoices(InnerVoiceDataBase())
         self.innervoice.jarvis(jarvis.Jarvis())
+
         self.innervoice.start()
 
     def test_innervoice_exception(self):
