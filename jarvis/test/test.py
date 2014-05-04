@@ -13,7 +13,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ##from jarvistest import *
 ##from worddatabasebuildertest import *
 ##from trainingdatabasebuildertest import *
-##from databasebuildertest import *
+from databasebuildertest import *
 ##from neuraltrainertest import *
 ##from abilitiesdatabasetest import *
 ##from abilitiesdatabasebuilderstest import *
@@ -23,6 +23,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ##from voicetest import *
 ##from consoletest import *
 from innervoicetest import *
+from innervoicedatabasebuildertest import *
+from innervoicedatabasetest import *
 
 if __name__ == "__main__":
     unittest.main()

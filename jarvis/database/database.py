@@ -156,6 +156,55 @@ class TrainingDataBase(object):
         try: return max(map(lambda request: len(request),self._database.values()))
         except ValueError: return 0
 
+class InnerVoiceDataBase(object):
+    """
+        Internal voice database
+
+        Attributes:
+        _database       - List of internal voices
+    """
+    def __init__(self):
+        self._database = set()
+
+    def add(self,voice):
+        """
+            Adds new element
+
+            Input:
+            voice       - database element (string)
+
+            Returns:
+            Nothing
+        """
+        self._database.add(voice)
+
+    def getAll(self):
+        """
+            Returns list of all database elements
+
+            Input:
+            Nothing
+
+            Returns:
+            Nothing
+        """
+        return list(self._database)
+
+    def getRandom(self):
+        """
+            Gets random element
+
+            Input:
+            Nothing
+
+            Returns:
+            element
+        """
+        import random
+
+        return list(self._database)[random.randint(0,len(self._database) - 1)]
+
+
 class AbilitiesDataBase(object):
     """
         List of Jarivs abilities

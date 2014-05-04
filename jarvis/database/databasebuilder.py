@@ -37,6 +37,21 @@ class DataBaseBuilder(object):
         """
         raise DataBaseBuilderException("Not implemented!")
 
+    def _readFileContents(self,file_path):
+        """
+            Reads file contents
+
+            Input:
+            file_path   - Path to file
+
+            Returns:
+            list of lines
+        """
+        import lowlevel
+
+        try: return lowlevel.readFileContents(file_path)
+        except lowlevel.LowLevelException as error: raise DataBaseBuilderException("Cannot open: " + file_path + " . Error: " + str(error))
+
 class WordDataBaseBuilder(DataBaseBuilder):
     """
         This class is responsible for building words database
@@ -57,13 +72,10 @@ class WordDataBaseBuilder(DataBaseBuilder):
         from database import WordDataBase
         from wordparser import WordParser
         from record import Record
-        import lowlevel
 
         words = set()
         for file_path in self._file_list:
-            try: contents = lowlevel.readFileContents(file_path)
-            except lowlevel.LowLevelException as error: raise DataBaseBuilderException("Cannot open: " + file_path + " . Error: " + str(error))
-
+            contents = self._readFileContents(file_path)
             words = words.union(WordParser(contents).wordsSet())
 
         word_db = WordDataBase()
@@ -91,13 +103,11 @@ class TrainingDataBaseBuilder(DataBaseBuilder):
         """
         from database import TrainingDataBase
         from wordparser import WordParser
-        import lowlevel
 
         database = TrainingDataBase()
 
         for file_path in self._file_list:
-            try: contents = lowlevel.readFileContents(file_path)
-            except lowlevel.LowLevelException as error: raise DataBaseBuilderException("Cannot open: " + file_path + " . Error: " + str(error))
+            contents = self._readFileContents(file_path)
 
             for line in contents.split("\n"):
                 data = line.split(";")
@@ -105,6 +115,26 @@ class TrainingDataBaseBuilder(DataBaseBuilder):
                     request = WordParser(data[0]).wordsList()
                     answer = WordParser(data[1]).wordsList()
                     database.add(request,answer)
+
+        return database
+
+
+class InnerVoiceDataBaseBuilder(DataBaseBuilder):
+    """
+        Internal voice data base builder
+
+        Attributes:
+
+    """
+    def generateDataBase(self):
+        from database import InnerVoiceDataBase
+
+        database = InnerVoiceDataBase()
+
+        for file_path in self._file_list:
+            contents = self._readFileContents(file_path)
+            for line in contents.split("\n"):
+                database.add(line)
 
         return database
 
