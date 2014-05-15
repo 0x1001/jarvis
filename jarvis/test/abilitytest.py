@@ -42,3 +42,10 @@ class TestHello(unittest.TestCase):
             self.assertIsInstance(element,WordRecord)
 
         self.assertFalse(result == [])
+
+class TestExit(unittest.TestCase):
+    def test_execute(self):
+        from abilities.a_exit import Exit
+
+        with self.assertRaises(SystemExit):
+            result = Exit().execute()

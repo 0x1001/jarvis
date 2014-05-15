@@ -4,3 +4,6 @@ where are you from ; i do not know
 what time is it ; it is [1]
 hello ; [2]
 hi ; [2]
+exit ; [3]
+quit ; [3]
+shutdown ; [3]
