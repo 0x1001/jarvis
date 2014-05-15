@@ -75,9 +75,14 @@ class JarvisTest(unittest.TestCase):
         answer = self.he.respond("abc abc")
         self.assertEqual(answer,"abc test")
 
-    def test_createInnerVoiceDatabase(self):
-        self.he.createInnerVoiceDatabase(self._innervoice_builder())
+    def test_start_stop(self):
+        import threading
+        import time
 
-    def test_start(self):
         self.he.createInnerVoiceDatabase(self._innervoice_builder())
-        self.he.start()
+        start_thread = threading.Thread(target=self.he.start)
+        start_thread.start()
+        time.sleep(0.5)
+        self.he.stop()
+        start_thread.join()
+        self.assertFalse(start_thread.isAlive())

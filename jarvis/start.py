@@ -5,7 +5,6 @@ if __name__ == "__main__":
     from database import AbilitiesDataBaseBuilder
     from database import InnerVoiceDataBaseBuilder
     from interfaces import Console
-    import time
 
     wd_builder = WordDataBaseBuilder()
     wd_builder.addTxtFile("learning_material/traning.txt")
@@ -24,10 +23,10 @@ if __name__ == "__main__":
     he.createAbilitiesDataBase(ab_builder)
     he.createInnerVoiceDatabase(iv_builder)
     he.train()
-    he.start()
 
     console = Console()
     console.jarvis(he)
     console.start()
 
-    while True: time.sleep(10)
+    he.start()
+

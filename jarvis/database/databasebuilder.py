@@ -144,8 +144,23 @@ class AbilitiesDataBaseBuilder(object):
         Abilities builder
 
         Attributes:
-
+        _jarvis         - Jarvis reference
     """
+    def __init__(self):
+        self._jarvis = None
+
+    def jarvis(self,jarvis):
+        """
+            Sets jarvis
+
+            Input:
+            Jarvis
+
+            Returns:
+            Nothing
+        """
+        self._jarvis = jarvis
+
     def generateDataBase(self):
         """
             Generates abilities list
@@ -156,17 +171,23 @@ class AbilitiesDataBaseBuilder(object):
             Returns:
             Abilities
         """
+        from jarvis import Jarvis
         from database import AbilitiesDataBase
         from abilities import a_test
         from abilities import a_time
         from abilities import a_hello
         from abilities import a_exit
 
+        if not isinstance(self._jarvis,Jarvis): raise DataBaseBuilderException
+
         abilities_list = AbilitiesDataBase()
         abilities_list.addAbility(a_test.Test())
         abilities_list.addAbility(a_time.Time())
         abilities_list.addAbility(a_hello.Hello())
-        abilities_list.addAbility(a_exit.Exit())
+
+        exit_ability = a_exit.Exit()
+        exit_ability.jarvis(self._jarvis)
+        abilities_list.addAbility(exit_ability)
 
         return abilities_list
 

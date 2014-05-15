@@ -12,12 +12,14 @@ class Jarvis(object):
         _body           - Body object
         _word_db        - Words database
         _traning_db     - Training database
+        _stop_event     - Stop event
     """
     def __init__(self):
         from neural import Brain
         from body import Body
         from voice import Voice
         from neural import InnerVoice
+        import threading
 
         self._brain = Brain()
         self._body = Body()
@@ -27,6 +29,8 @@ class Jarvis(object):
 
         self._word_db = None
         self._traning_db = None
+
+        self._stop_event = threading.Event()
 
     def respond(self,request):
         """
@@ -110,6 +114,7 @@ class Jarvis(object):
             Returns:
             Nothing
         """
+        builder.jarvis(self)
         self._body.abilitiesDataBase(builder.generateDataBase())
 
     def train(self):
@@ -140,4 +145,22 @@ class Jarvis(object):
             Returns:
             Nothing
         """
-        self._inner_voices.start()
+        from neural import InnerVoiceException
+
+        try: self._inner_voices.start()
+        except InnerVoiceException as error: raise JarvisException(str(error))
+
+        self._stop_event.wait()
+
+    def stop(self):
+        """
+            This method stops Jarvis internals
+
+            Input:
+            Nothing
+
+            Returns:
+            Nothing
+        """
+        self._inner_voices.stop()
+        self._stop_event.set()

@@ -46,6 +46,16 @@ class TestHello(unittest.TestCase):
 class TestExit(unittest.TestCase):
     def test_execute(self):
         from abilities.a_exit import Exit
+        from database import WordRecord
+        import jarvis
 
-        with self.assertRaises(SystemExit):
-            result = Exit().execute()
+        exit_ability = Exit()
+        he = jarvis.Jarvis()
+        try: he.start()
+        except jarvis.JarvisException: pass
+
+        exit_ability.jarvis(he)
+        result = exit_ability.execute()
+
+        for element in result:
+            self.assertIsInstance(element,WordRecord)

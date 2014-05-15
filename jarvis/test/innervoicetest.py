@@ -14,12 +14,7 @@ class InnerVoiceTest(unittest.TestCase):
         self.innervoice.jarvis(jarvis.Jarvis())
 
         self.innervoice.start()
-
-    def test_innervoice_exception(self):
-        from neural import InnerVoiceException
-
-        with self.assertRaises(InnerVoiceException):
-            self.innervoice._innervoice()
+        self.innervoice.stop()
 
     def test_innervoice(self):
         self.assertTrue(hasattr(self.innervoice,"_innervoice"))
