@@ -28,18 +28,31 @@ class TrainerTest(unittest.TestCase):
         with self.assertRaises(TrainerException):
             self.tr_empty.train(None)
 
-    def test_train_validinput_empty(self):
-        from neural import Brain
+    def test_train_validinput_empty_neuralbrain(self):
+        from neural import NeuralBrain
         from trainer import TrainerException
 
         with self.assertRaises(TrainerException):
-            self.tr_empty.train(Brain())
+            self.tr_empty.train(NeuralBrain())
 
-    def test_train_validinput(self):
-        from neural import Brain
+    def test_train_validinput_neuralbrain(self):
+        from neural import NeuralBrain
         from trainer import TrainerException
 
-        self.tr_notempty.train(Brain())
+        self.tr_notempty.train(NeuralBrain())
+
+    def test_train_validinput_empty_lookuptablebrain(self):
+        from neural import LookUpTableBrain
+        from trainer import TrainerException
+
+        with self.assertRaises(TrainerException):
+            self.tr_empty.train(LookUpTableBrain())
+
+    def test_train_validinput_lookuptablebrain(self):
+        from neural import LookUpTableBrain
+        from trainer import TrainerException
+
+        self.tr_notempty.train(LookUpTableBrain())
 
     def test_prepareDataSet(self):
         data = self.tr_notempty._prepareDataSet()

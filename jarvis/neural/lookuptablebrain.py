@@ -1,38 +1,45 @@
 ################################################################################
 ################################### Class ######################################
 ################################################################################
-class BrainException(Exception): pass
+from brain import BrainException,Brain
 
-class Brain(object):
+class LookUpTableBrainException(BrainException): pass
+
+class LookUpTableBrain(Brain):
     """
-        Brain abstract class
+        Brain class based on Lookup table
 
         Attributes:
-
+        _table      - Look up table
     """
+    def __init__(self):
+        self._table = {}
+
     def configure(self,**kargs):
         """
-            This function configures brain
+            This method is not used
 
             Input:
-            kargs
+            Nothing
 
             Returns:
             Nothing
         """
-        raise BrainException("Not implemented!")
+        pass
 
     def learn(self,dataset):
         """
-            This function trains brain
+            This method trains network
 
             Input:
-            dataset     - Dataset to train brain
+            dataset     - Dataset to train
 
             Returns:
             Nothing
         """
-        raise BrainException("Not implemented!")
+        if dataset == {}: raise LookUpTableBrainException("Dataset for learning is empty.")
+
+        self._table = dataset
 
     def think(self,data):
         """
@@ -44,4 +51,5 @@ class Brain(object):
             Returns:
             output data (answer)
         """
-        raise BrainException("Not implemented!")
+        try: return self._table[data]
+        except KeyError: raise LookUpTableBrainException("Don't know.")

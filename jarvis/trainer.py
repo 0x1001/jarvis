@@ -36,7 +36,7 @@ class Trainer(object):
         if not isinstance(brain_instance,Brain):
             raise TrainerException("Bad input. Has to be Brain object.")
 
-        brain_instance.configure(self._traning_db.maxRequestWordCount(),self._traning_db.maxAnswerWordCount())
+        brain_instance.configure(input=self._traning_db.maxRequestWordCount(),output=self._traning_db.maxAnswerWordCount())
 
         try: brain_instance.learn(self._prepareDataSet())
         except BrainException as error: raise TrainerException(error)

@@ -4,7 +4,7 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from braintest import *
+from neuralbraintest import *
 from trainertest import *
 from trainingdatabasetest import *
 from worddatabasetest import *
@@ -25,6 +25,8 @@ from consoletest import *
 from innervoicetest import *
 from innervoicedatabasebuildertest import *
 from innervoicedatabasetest import *
+from lookuptablebraintest import *
+from braintest import *
 
 if __name__ == "__main__":
     unittest.main()
