@@ -59,3 +59,20 @@ class TestExit(unittest.TestCase):
 
         for element in result:
             self.assertIsInstance(element,WordRecord)
+
+class TestRadio(unittest.TestCase):
+    def test_execute(self):
+        from database import WordRecord
+        from abilities.a_mplayer import StartBBCRadio,Stop
+
+        start_radio = StartBBCRadio()
+        result = start_radio.execute()
+
+        for element in result:
+            self.assertIsInstance(element,WordRecord)
+
+        stop_radio = Stop()
+        result = stop_radio.execute()
+
+        for element in result:
+            self.assertIsInstance(element,WordRecord)

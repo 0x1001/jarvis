@@ -56,3 +56,34 @@ class LowLevelTest(unittest.TestCase):
         self.assertEqual(contents,dummy_text)
 
         os.unlink(self.__dummy_file)
+
+    def test_run_cmd(self):
+        import lowlevel
+
+        self.assertIsInstance(lowlevel.run_cmd("dir"),int)
+
+    def test_temp_path(self):
+        import lowlevel
+        import os
+
+        self.assertTrue(os.path.isdir(lowlevel.temp_path()))
+
+
+    def test_remove(self):
+        import lowlevel
+        import os
+
+        path = "dummy.txt"
+
+        with open(path,"w"): pass
+        lowlevel.remove(path)
+        self.assertTrue(not os.path.exists(path))
+
+        os.mkdir(path)
+        lowlevel.remove(path)
+        self.assertTrue(not os.path.exists(path))
+
+    def test_windows_linux(self):
+        import lowlevel
+
+        self.assertNotEqual(lowlevel.is_linux(),lowlevel.is_windows())

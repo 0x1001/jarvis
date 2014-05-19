@@ -177,6 +177,7 @@ class AbilitiesDataBaseBuilder(object):
         from abilities import a_time
         from abilities import a_hello
         from abilities import a_exit
+        from abilities import a_mplayer
 
         if not isinstance(self._jarvis,Jarvis): raise DataBaseBuilderException
 
@@ -188,6 +189,9 @@ class AbilitiesDataBaseBuilder(object):
         exit_ability = a_exit.Exit()
         exit_ability.jarvis(self._jarvis)
         abilities_list.addAbility(exit_ability)
+
+        abilities_list.addAbility(a_mplayer.StartBBCRadio())
+        abilities_list.addAbility(a_mplayer.Stop())
 
         return abilities_list
 
