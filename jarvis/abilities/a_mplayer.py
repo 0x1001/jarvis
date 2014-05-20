@@ -23,7 +23,7 @@ class StartBBCRadio(Ability):
         if os.path.exists(lowlevel.temp_path(_TEMP_FILE)):
             return [WordRecord("sir"),WordRecord("music"),WordRecord("is"),WordRecord("already"),WordRecord("playing")]
 
-        pid = lowlevel.run_cmd("mplayer -playlist http://www.bbc.co.uk/worldservice/meta/live/nb/eieuk_au_nb.asx")
+        pid = lowlevel.run_cmd("mplayer -playlist http://www.bbc.co.uk/worldservice/meta/live/nb/eieuk_au_nb.asx </dev/null >/dev/null 2>&1 &")
 
         with open(lowlevel.temp_path(_TEMP_FILE),"w") as fp:
             fp.write(str(pid))
@@ -41,16 +41,20 @@ class Stop(Ability):
             Returns:
             Nothing
         """
+	import os
         from database import WordRecord
         import lowlevel
 
         if lowlevel.is_windows():
             return [WordRecord("i"),WordRecord("am"),WordRecord("sorry"),WordRecord("sir"),WordRecord("this"),WordRecord("can"),WordRecord("run"),WordRecord("on"),WordRecord("linux"),WordRecord("only")]
 
+	if not os.path.exists(lowlevel.temp_path(_TEMP_FILE)):
+	    return [WordRecord("music"),WordRecord("is"),WordRecord("running"),WordRecord("sir")]
+
         with open(lowlevel.temp_path(_TEMP_FILE),"r") as fp:
             pid = fp.read()
 
-        lowlevel.run_cmd("kill " + pid)
+        lowlevel.run_cmd("killall mplayer")
 
         lowlevel.remove(lowlevel.temp_path(_TEMP_FILE))
 
