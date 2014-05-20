@@ -44,9 +44,8 @@ def run_cmd(cmd):
         Returns:
         pid
     """
-    import shlex
     import subprocess
-    return subprocess.Popen(shlex.split(cmd),shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE).pid
+    return subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE).pid
 
 def temp_path(file_name=None):
     """
