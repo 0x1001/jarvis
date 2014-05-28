@@ -10,14 +10,19 @@ class Voice(object):
         Attributes:
         _volume     - Voice volume
         _rate       - Voice rate
+        _voice_lock - Voice lock to fix runtime error of pyttsx
 
     """
     def __init__(self):
+        import threading
+
         try: import pyttsx
         except ImportError: raise VoiceException("You have to install: pyttsx")
 
         self._volume = 1.0
         self._rate = 90
+
+        self._voice_lock = threading.RLock()
 
     def speak(self,sentence):
         """
@@ -42,7 +47,9 @@ class Voice(object):
         engine.setProperty('volume',self._volume)
         engine.setProperty('rate',self._rate)
         engine.say(sentence)
-        engine.runAndWait()
+
+        with self._voice_lock:
+            engine.runAndWait()
 
     def volume(self,value):
         """
