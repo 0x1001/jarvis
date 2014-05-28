@@ -1,4 +1,4 @@
-from ability import Ability
+from ability import Ability,AbilityException
 
 class MediaCenter(object):
     """
@@ -12,7 +12,11 @@ class MediaCenter(object):
         import lowlevel
 
         if lowlevel.is_linux():
-            import mplayer
+            try:
+                import mplayer
+            except ImportError:
+                raise AbilityException("mplayer.py is not installed!")
+
             self._player = mplayer.Player()
         else:
             self._player = None
