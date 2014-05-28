@@ -60,19 +60,44 @@ class TestExit(unittest.TestCase):
         for element in result:
             self.assertIsInstance(element,WordRecord)
 
-class TestRadio(unittest.TestCase):
-    def test_execute(self):
-        from database import WordRecord
-        from abilities.a_mplayer import StartBBCRadio,Stop
+class TestMediaCenter(unittest.TestCase):
+    def setUp(self):
+        from abilities.a_mediacenter import MediaCenter
 
-        start_radio = StartBBCRadio()
-        result = start_radio.execute()
+        self.mc = MediaCenter()
 
-        for element in result:
-            self.assertIsInstance(element,WordRecord)
+    def test_factoryBBCRadioStart(self):
+        from abilities.a_mediacenter import BBCRadioStart
 
-        stop_radio = Stop()
-        result = stop_radio.execute()
+        ability = self.mc.factoryBBCRadioStart()
 
-        for element in result:
-            self.assertIsInstance(element,WordRecord)
+        self.assertIsInstance(ability,BBCRadioStart)
+
+    def test_factoryStop(self):
+        from abilities.a_mediacenter import Stop
+
+        ability = self.mc.factoryStop()
+
+        self.assertIsInstance(ability,Stop)
+
+    def test_BBCRadioStart(self):
+        from abilities.a_mediacenter import BBCRadioStart
+
+        ability = BBCRadioStart()
+        ability.player(None)
+        ability.execute()
+
+    def test_Stop(self):
+        from abilities.a_mediacenter import Stop
+
+        ability = Stop()
+        ability.player(None)
+        ability.execute()
+
+    def test_mediacenterability(self):
+        from abilities.a_mediacenter import MediaCenterAbility
+
+        ability = MediaCenterAbility()
+        self.assertFalse(ability._check_player())
+        ability.player("dummy")
+        self.assertTrue(ability._check_player())
