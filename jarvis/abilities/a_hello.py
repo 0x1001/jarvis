@@ -13,14 +13,18 @@ class Hello(Ability):
         """
         from database import WordRecord
         import datetime
+        import random
 
         current = datetime.datetime.now()
 
         if current.hour >= 4 and current.hour < 12:
-            response = [WordRecord("good"),WordRecord("morning")]
+            response_alt1 = [WordRecord("good"),WordRecord("morning"),WordRecord("sir")]
         elif current.hour >= 12 and current.hour < 18:
-            response = [WordRecord("good"),WordRecord("afternoon")]
+            response_alt1 = [WordRecord("good"),WordRecord("afternoon"),WordRecord("sir")]
         elif ( current.hour >= 18 and current.hour <= 24 ) or current.hour < 4 :
-            response = [WordRecord("good"),WordRecord("evening")]
+            response_alt1 = [WordRecord("good"),WordRecord("evening"),WordRecord("sir")]
 
-        return response
+        response_alt2 = [WordRecord("hello"),WordRecord("sir")]
+        response_alt3 = [WordRecord("hi"),WordRecord("sir")]
+
+        return random.choice([response_alt1,response_alt2,response_alt3])

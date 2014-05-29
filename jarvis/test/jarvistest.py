@@ -80,6 +80,11 @@ class JarvisTest(unittest.TestCase):
         import time
 
         self.he.createInnerVoiceDatabase(self._innervoice_builder())
+        self.he.createWordsDataBase(self._word_database_builder())
+        self.he.createTrainingDataBase(self._traning_database_builder())
+        self.he.createAbilitiesDataBase(self._abilities_builder())
+        self.he.train()
+
         start_thread = threading.Thread(target=self.he.start)
         start_thread.start()
         time.sleep(0.5)

@@ -10,8 +10,11 @@ class InnerVoiceTest(unittest.TestCase):
         import jarvis
         from database import InnerVoiceDataBase
 
+        he = jarvis.Jarvis()
+        he.respond = lambda request: []
+
         self.innervoice.innerVoices(InnerVoiceDataBase())
-        self.innervoice.jarvis(jarvis.Jarvis())
+        self.innervoice.jarvis(he)
 
         self.innervoice.start()
         self.innervoice.stop()

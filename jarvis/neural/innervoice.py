@@ -87,8 +87,10 @@ class InnerVoice(object):
         import random
         from database import DataBaseException
 
+        self._jarvis.respond("hello")
+
         while True:
-            if self._stop_event.wait(random.randint(30,180)): break
+            if self._stop_event.wait(random.randint(180,600)): break
 
             try: self._jarvis.respond(self._database.getRandom())
             except DataBaseException: pass
