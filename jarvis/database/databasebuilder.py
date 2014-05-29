@@ -182,17 +182,17 @@ class AbilitiesDataBaseBuilder(object):
         if not isinstance(self._jarvis,Jarvis): raise DataBaseBuilderException
 
         abilities_list = AbilitiesDataBase()
-        abilities_list.addAbility(a_test.Test())
-        abilities_list.addAbility(a_time.Time())
-        abilities_list.addAbility(a_hello.Hello())
+        abilities_list.addAbility(0,a_test.Test())
+        abilities_list.addAbility(1,a_time.Time())
+        abilities_list.addAbility(2,a_hello.Hello())
 
         exit_ability = a_exit.Exit()
         exit_ability.jarvis(self._jarvis)
-        abilities_list.addAbility(exit_ability)
+        abilities_list.addAbility(3,exit_ability)
 
         mc = a_mediacenter.MediaCenter()
-        abilities_list.addAbility(mc.factoryBBCRadioStart())
-        abilities_list.addAbility(mc.factoryStop())
+        abilities_list.addAbility(4,mc.factoryBBCRadioStart())
+        abilities_list.addAbility(5,mc.factoryStop())
 
         return abilities_list
 

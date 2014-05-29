@@ -212,13 +212,14 @@ class AbilitiesDataBase(object):
         _database       - List of abilities
     """
     def __init__(self):
-        self._database = []
+        self._database = {}
 
-    def addAbility(self,ab):
+    def addAbility(self,id,ab):
         """
             Adds new ability
 
             Input:
+            id          - Ability ID
             ab          - Ability object
 
             Returns:
@@ -227,8 +228,9 @@ class AbilitiesDataBase(object):
         from abilities import Ability
 
         if not isinstance(ab,Ability): raise DataBaseException("Not an Ability!")
+        if self._database.has_key(id): raise DataBaseException("Ability already exists!")
 
-        self._database.append(ab)
+        self._database[id] = ab
 
     def getAbility(self,id):
         """
@@ -241,5 +243,5 @@ class AbilitiesDataBase(object):
             Ability
         """
         try: return self._database[id]
-        except IndexError: raise DataBaseException("Ability not found. Index: " + str(id))
+        except KeyError: raise DataBaseException("Ability not found. Index: " + str(id))
 

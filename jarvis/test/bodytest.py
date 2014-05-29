@@ -7,7 +7,7 @@ class BodyTest(unittest.TestCase):
         from abilities import a_test
 
         ab_db = AbilitiesDataBase()
-        ab_db.addAbility(a_test.Test())
+        ab_db.addAbility(0,a_test.Test())
 
         self.b = Body()
         self.b.abilitiesDataBase(ab_db)
