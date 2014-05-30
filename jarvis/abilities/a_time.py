@@ -17,11 +17,11 @@ class Time(Ability):
         import datetime
 
         current = datetime.datetime.now()
-        hours.extend(hours)
+        hours24 = hours + hours
 
-        hour = WordRecord(hours[current.hour])
-        try: next_hour = WordRecord(hours[current.hour+1])
-        except IndexError: next_hour = WordRecord(hours[0])
+        hour = WordRecord(hours24[current.hour])
+        try: next_hour = WordRecord(hours24[current.hour+1])
+        except IndexError: next_hour = WordRecord(hours24[0])
 
         if current.minute < 10:
             response = [WordRecord("few"),WordRecord("minutes"),WordRecord("after"),hour]
