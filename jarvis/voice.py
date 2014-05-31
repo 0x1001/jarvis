@@ -6,6 +6,8 @@ class VoiceException(Exception): pass
 class Voice(object):
     """
         This class is responsible for voice speaking
+        pyttsx is a little buggy thats why i have to init pyttsx engine each time.
+        This causes memory leak on Windows :(.
 
         Attributes:
         _volume     - Voice volume
@@ -36,20 +38,23 @@ class Voice(object):
         """
         import pyttsx
 
-        engine = pyttsx.init()
-
-        if isinstance(sentence,list):
-            sentence = " ".join(sentence)
-        elif isinstance(sentence,str): pass
-        else:
-            raise VoiceException
-
-        engine.setProperty('volume',self._volume)
-        engine.setProperty('rate',self._rate)
-        engine.say(sentence)
-
         with self._voice_lock:
+            engine = pyttsx.init()
+
+            if isinstance(sentence,list):
+                sentence = " ".join(sentence)
+            elif isinstance(sentence,str): pass
+            else:
+                raise VoiceException
+
+            engine.setProperty('volume',self._volume)
+            engine.setProperty('rate',self._rate)
+            engine.say(sentence)
+
             engine.runAndWait()
+            engine.stop()
+
+            del engine
 
     def volume(self,value):
         """
