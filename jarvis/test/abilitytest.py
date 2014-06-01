@@ -101,3 +101,25 @@ class TestMediaCenter(unittest.TestCase):
         self.assertFalse(ability._check_player())
         ability.player("dummy")
         self.assertTrue(ability._check_player())
+
+class TestWeather(unittest.TestCase):
+    def test_execute(self):
+        from database import WordRecord
+        from abilities import a_weather
+
+        ability = a_weather.Weather()
+        result = ability.execute()
+
+        for element in result:
+            self.assertIsInstance(element,WordRecord)
+
+    def test_get_weather(self):
+        from abilities import a_weather
+
+        ability = a_weather.Weather()
+        temp,wind,description = ability._get_weather("Roznov pod Radhostem, CZ")
+
+        self.assertIsInstance(temp,int)
+        self.assertIsInstance(description,str)
+        self.assertIsInstance(wind,int)
+

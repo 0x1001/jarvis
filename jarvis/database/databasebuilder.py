@@ -178,6 +178,7 @@ class AbilitiesDataBaseBuilder(object):
         from abilities import a_hello
         from abilities import a_exit
         from abilities import a_mediacenter
+        from abilities import a_weather
 
         if not isinstance(self._jarvis,Jarvis): raise DataBaseBuilderException
 
@@ -193,6 +194,8 @@ class AbilitiesDataBaseBuilder(object):
         mc = a_mediacenter.MediaCenter()
         abilities_list.addAbility(4,mc.factoryBBCRadioStart())
         abilities_list.addAbility(5,mc.factoryStop())
+
+        abilities_list.addAbility(6,a_weather.Weather())
 
         return abilities_list
 

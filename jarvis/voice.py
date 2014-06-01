@@ -45,7 +45,7 @@ class Voice(object):
                 sentence = " ".join(sentence)
             elif isinstance(sentence,str): pass
             else:
-                raise VoiceException
+                raise VoiceException("Wrong sentence type: " + str(type(sentence)))
 
             engine.setProperty('volume',self._volume)
             engine.setProperty('rate',self._rate)

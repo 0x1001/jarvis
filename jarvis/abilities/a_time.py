@@ -5,7 +5,7 @@ hours = ["twelve","one","two","three","four","five","six","seven","eight","nine"
 class Time(Ability):
     def execute(self):
         """
-            Test ability
+            Time ability
 
             Input:
             Nothing
