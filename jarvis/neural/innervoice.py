@@ -84,13 +84,19 @@ class InnerVoice(object):
             Returns:
             Nothing
         """
+        import datetime
         import random
         from database import DataBaseException
 
         self._jarvis.respond("hello")
 
         while True:
-            if self._stop_event.wait(random.randint(180,600)): break
+            if self._stop_event.wait(random.randint(300,600)): break
+
+            current_time = datetime.datetime.now()
+            morning = datetime.datetime.combine(current_time.date(),datetime.time(8,30))
+            night = datetime.datetime.combine(current_time.date(),datetime.time(23,00))
+            if current_time < morning and current_time > night: continue
 
             try: self._jarvis.respond(self._database.getRandom())
             except DataBaseException: pass

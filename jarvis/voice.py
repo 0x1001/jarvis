@@ -22,7 +22,7 @@ class Voice(object):
         except ImportError: raise VoiceException("You have to install: pyttsx")
 
         self._volume = 1.0
-        self._rate = 90
+        self._rate = 100
 
         self._voice_lock = threading.RLock()
 

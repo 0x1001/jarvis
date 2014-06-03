@@ -179,6 +179,7 @@ class AbilitiesDataBaseBuilder(object):
         from abilities import a_exit
         from abilities import a_mediacenter
         from abilities import a_weather
+        from abilities import a_didyouknow
 
         if not isinstance(self._jarvis,Jarvis): raise DataBaseBuilderException
 
@@ -196,6 +197,7 @@ class AbilitiesDataBaseBuilder(object):
         abilities_list.addAbility(5,mc.factoryStop())
 
         abilities_list.addAbility(6,a_weather.Weather())
+        abilities_list.addAbility(7,a_didyouknow.DidYouKnow())
 
         return abilities_list
 

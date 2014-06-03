@@ -123,3 +123,56 @@ class TestWeather(unittest.TestCase):
         self.assertIsInstance(description,str)
         self.assertIsInstance(wind,int)
 
+class TestDidYouKnow(unittest.TestCase):
+    def test_execute(self):
+        from database import WordRecord
+        from abilities import a_didyouknow
+
+        ability = a_didyouknow.DidYouKnow()
+        result = ability.execute()
+
+        for element in result:
+            self.assertIsInstance(element,WordRecord)
+
+    def test_get_didyouknow(self):
+        from abilities import a_didyouknow
+
+        ability = a_didyouknow.DidYouKnow()
+        result = ability._get_didyouknow()
+
+        self.assertIsInstance(result,str)
+
+    def test_parse(self):
+        from abilities import a_didyouknow
+
+        ability = a_didyouknow.DidYouKnow()
+
+        with open("didyouknow.txt",'r') as fp:
+            results = ability._parse(fp.read())
+
+        self.assertIsInstance(results,list)
+        self.assertGreater(len(results),0)
+
+        for text in results:
+            self.assertIsInstance(text,str)
+
+    def test_execute_error(self):
+        from database import WordRecord
+        from abilities import a_didyouknow
+
+        ability = a_didyouknow.DidYouKnow()
+        ability._regex = "Not valid"
+        ability._file_source = "didyouknow.txt"
+
+        result = ability.execute()
+
+        for element in result:
+            self.assertIsInstance(element,WordRecord)
+
+        ability = a_didyouknow.DidYouKnow()
+        ability._url_source = "http://kkkkk121kkk212kkk.pl"
+
+        result = ability.execute()
+
+        for element in result:
+            self.assertIsInstance(element,WordRecord)
