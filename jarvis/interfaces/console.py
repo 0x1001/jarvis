@@ -16,7 +16,7 @@ class Console(object):
 
         self._jarvis = None
 
-        self._console_thread = threading.Thread(target=self._console)
+        self._console_thread = threading.Thread(target=self._console,name=self._console.func_name)
         self._console_thread.setDaemon(True)
 
     def start(self):
@@ -62,4 +62,3 @@ class Console(object):
 
             try: print self._jarvis.respond(request)
             except JarvisException as error: print str(error)
-

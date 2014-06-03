@@ -14,7 +14,7 @@ class InnerVoice(object):
     def __init__(self):
         import threading
 
-        self._innervoice_thread = threading.Thread(target=self._innervoice)
+        self._innervoice_thread = threading.Thread(target=self._innervoice,name=self._innervoice.func_name)
         self._stop_event = threading.Event()
 
         self._jarvis = None

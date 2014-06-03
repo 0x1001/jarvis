@@ -85,7 +85,7 @@ class JarvisTest(unittest.TestCase):
         self.he.createAbilitiesDataBase(self._abilities_builder())
         self.he.train()
 
-        start_thread = threading.Thread(target=self.he.start)
+        start_thread = threading.Thread(target=self.he.start,name=self.he.start.func_name)
         start_thread.start()
         time.sleep(0.5)
         self.he.stop()
