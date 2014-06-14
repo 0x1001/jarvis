@@ -1,4 +1,4 @@
-from ability import Ability
+from ability import Ability,AbilityException
 
 LOCATION = "Roznov pod Radhostem, CZ"
 
@@ -38,10 +38,28 @@ class Weather(Ability):
 
         url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location
 
-        req = requests.get(url)
-        data = req.json()
+        data = self._get_url_json(url)
+
         temp = int(float(data["main"]["temp"]) - 272.15)
         description = str(data["weather"][0]["description"])
         wind = int(data["wind"]["speed"])
 
         return temp,wind,description
+
+    def _get_url_json(self,url):
+        """
+            Gets json data from url
+
+            Input:
+            url     - Url
+
+            Returns:
+            json dict
+        """
+        import requests
+
+        req = requests.get(url)
+        try:
+            return req.json()
+        except ValueError:
+            raise AbilityException()

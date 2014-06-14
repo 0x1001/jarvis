@@ -21,3 +21,12 @@ class InnerVoiceTest(unittest.TestCase):
 
     def test_innervoice(self):
         self.assertTrue(hasattr(self.innervoice,"_innervoice"))
+
+    def test_isTimeToSpeak(self):
+        import datetime
+        delta = datetime.timedelta(seconds=5)
+        self.innervoice.ALLOW_TIME = ((datetime.datetime.now()-delta).time(),(datetime.datetime.now()+delta).time())
+        self.assertTrue(self.innervoice._isAllowedToSpeak())
+
+        self.innervoice.ALLOW_TIME = ((datetime.datetime.now()-delta).time(),(datetime.datetime.now()-delta).time())
+        self.assertFalse(self.innervoice._isAllowedToSpeak())

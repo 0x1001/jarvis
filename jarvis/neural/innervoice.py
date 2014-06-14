@@ -10,12 +10,16 @@ class InnerVoice(object):
         Attributes:
         _innervoice_thread      - Internal voice thread
         _stop_event             - Stop event
+        ALLOW_TIME              - Tuple with allow time to speak
     """
     def __init__(self):
         import threading
+        import datetime
 
         self._innervoice_thread = threading.Thread(target=self._innervoice,name=self._innervoice.func_name)
         self._stop_event = threading.Event()
+
+        self.ALLOW_TIME = (datetime.time(8,30),datetime.time(23,00))
 
         self._jarvis = None
         self._database = None
@@ -84,20 +88,37 @@ class InnerVoice(object):
             Returns:
             Nothing
         """
-        import datetime
         import random
         from database import DataBaseException
+        from jarvis import JarvisException
 
         self._jarvis.respond("hello")
 
         while True:
             if self._stop_event.wait(random.randint(300,600)): break
 
-            current_time = datetime.datetime.now()
-            morning = datetime.datetime.combine(current_time.date(),datetime.time(8,30))
-            night = datetime.datetime.combine(current_time.date(),datetime.time(23,00))
-            if current_time < morning and current_time > night: continue
+            if self._isAllowedToSpeak():
+                try: self._jarvis.respond(self._database.getRandom())
+                except DataBaseException: pass
+                except JarvisException: pass
 
-            try: self._jarvis.respond(self._database.getRandom())
-            except DataBaseException: pass
+    def _isAllowedToSpeak(self):
+        """
+            Checks if it is allowed to speak
 
+            Input:
+            Nothing
+
+            Returns:
+            True/False
+        """
+        import datetime
+
+        current_time = datetime.datetime.now()
+        beginning = datetime.datetime.combine(current_time.date(),self.ALLOW_TIME[0])
+        end = datetime.datetime.combine(current_time.date(),self.ALLOW_TIME[1])
+
+        if current_time < beginning or current_time > end:
+            return False
+        else:
+            return True

@@ -123,6 +123,15 @@ class TestWeather(unittest.TestCase):
         self.assertIsInstance(description,str)
         self.assertIsInstance(wind,int)
 
+    def test_get_url_json(self):
+        from abilities import a_weather
+
+        ability = a_weather.Weather()
+        url = 'http://api.openweathermap.org/data/2.5/weather?q=Roznov pod Radhostem, CZ'
+        data = ability._get_url_json(url)
+
+        self.assertIsInstance(data,dict)
+
 class TestDidYouKnow(unittest.TestCase):
     def test_execute(self):
         from database import WordRecord
